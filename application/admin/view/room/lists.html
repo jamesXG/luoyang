@@ -1,0 +1,110 @@
+{include file="public/header" /}
+<div class="container">
+    <div class="row">
+        <div style="width: 100%;background: #ffffff;margin: 0 auto;text-align: center">
+            <!--定位房间信息-->
+            <input type="hidden" id="gallery" name="room" value="{$room}">
+            <table class="table table-striped">
+                <thead>
+                <tr class="column">
+                    <th>楼座+楼层</th>
+                    <th>房间</th>
+                    <th>入住人数</th>
+                    <th>已绑定</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="success">
+                    <td>{$room}</td>
+                    <td>{$roomCount}</td>
+                    <td>{$count}</td>
+                    <td>0</td>
+                </tr>
+                </tbody>
+            </table>
+            {if condition="is_array_null($data)"}
+            <div class="alert alert-info" role="alert">暂时房间还未进行分配！</div>
+            {else/}
+            {volist name="$data" id="vo"}
+            <table class="table table-bordered">
+                <thead>
+                {volist name="$vo['info']" id="i"}
+                <tr>
+                    {$i.room}--{$i.college}
+                </tr>
+                {/volist}
+                </thead>
+                <tbody style="text-align: center">
+                {volist name="vo['lists']" id="p"}
+                <tr style="height: 25px">
+                    <td style="width: 20%">{$p.room}</td>
+                    <td style="width: 40%"><a href="{:url('Search/stuDetail',['id' => $p.id])}"
+                                              style="text-decoration: underline">{$p.name}</a></td>
+                    <td style="width: 50%">{$p.major}</td>
+                </tr>
+                {/volist}
+                </tbody>
+            </table>
+            {/volist}
+            <div class="loadMain" style="width: 100%;background: #ffffff;margin: 0 auto;text-align: center">
+            </div>
+        </div>
+        {if condition = "$length >= 8"}
+        <div class="load">
+            <a class="load btn" href="javascript:;">点击显示更多</a>
+        </div>
+        {/if}
+        {/if}
+    </div>
+    <!--包含菜单文件-->
+    {include file="public/footer" /}
+</div>
+</body>
+<script>
+    $(".container").fadeIn("slow");
+    var nStart = 1;
+    var roomInfo = $("#gallery").val();
+    $(".btn").click(function () {
+        _this = $(this);
+        url = "{:url('Room/contentAjax')}";
+        _this.text("加载中……");
+        nStart++;
+        $.post(url,{start:nStart,room:roomInfo},function (res) {
+            if(res.status == 1) {
+                data = res.data;
+                info_html = '';
+                $(data).each(function () {
+                    info_html += "<table class='table table-bordered'>"+"<thead>";
+                    for(var i=0,len=this.info.length;i<len;i++){
+                        info_html +=
+                            "<tr>" + this.info[i]['room'] + "--" + this.info[i]['college']+
+                            "</tr>";
+                        }
+
+                        info_html += "</thead><tbody style='text-align: center'>";
+                    for(var j=0,len = this.lists.length; j<len; j++) {
+                        ID = this.lists[j]['id'];
+                        hrefUrl = "{:url('Search/stuDetail')}?id=" + ID; //切记此种传值方式
+
+                        info_html +=
+                            "<tr style='height: 25px'>" +
+                            "<td style='width: 20%'>" + this.lists[j]['room'] + "</td>" +
+                            "<td style='width: 40%'>" +
+                            "<a href='"+hrefUrl+"'style='text-decoration: underline'>" + this.lists[j]['name'] + "</a></td>" +
+                            "<td style='width: 50%'>" + this.lists[j]['major'] +
+                            "</td></tr>";
+                        }
+
+                        info_html +="</tbody></table>";
+                });
+                $(".loadMain").before(info_html);
+                _this.text("点击显示更多");
+            }else if(res.status == 0){
+                _this.text("没有更多信息了");
+                $(".load").fadeOut(1000);
+            }
+        },'json');
+
+    });
+</script>
+</html>

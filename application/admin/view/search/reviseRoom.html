@@ -1,0 +1,32 @@
+{include file="public/header" /}
+{load href="__STATIC__/common/common.js" /}
+<div class="container">
+    <div class="row">
+        <form method="post" id="update" name="update" action="{:url('search/save')}">
+            <div class="form">
+                <div class="form main">
+                    <div class="form main input">
+                        <div class=" input select">
+                            <select class="form-control" name="gallery">
+                                <option value="0"></option>
+                                {volist name="$data" id="vo"}
+                                <option value="{$vo}" {if condition="$k eq $vo" } selected="selected" {/if}>--{$vo}</option>
+                                {/volist}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form main input">
+                        <input type="text" class="form-control" value="{$v}" id="room" name="room" placeholder="房间:如100-1">
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" name="id" value="{$id}">
+            <div class="buttons">
+                <button type="submit" onclick="sure_layer()" class="btn btn-success">确定</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
+

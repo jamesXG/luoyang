@@ -1,0 +1,69 @@
+{include file="public/header" /}
+
+<div class="container">
+	<div class="row">
+		<div style="width: 100%;background: #ffffff;margin: 0 auto;text-align: center">
+		<table class="table">
+			<!--<caption>&nbsp;</caption>-->
+			<thead>
+			<tr class="column">
+				<th>楼座</th>
+				<th>房间</th>
+				<th>空房间</th>
+				<th>不可用</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr class="warning">
+				<td>合计</td>
+				<td>{$data['roomTotal']}</td>
+				<td>{$data['freeTotal']}</td>
+				<td>{$data['UnMadeTotal']}</td>
+			</tr>
+			<tr class="danger">
+				<td>女</td>
+				<td>{$data['femaleTotal']}</td>
+				<td>{$data['femaleFreeTotal']}</td>
+				<td>{$data['femaleUnMadeTotal']}</td>
+			</tr>
+			<tr class="success">
+				<td>男</td>
+				<td>{$data['maleTotal']}</td>
+				<td>{$data['maleFreeTotal']}</td>
+				<td>{$data['maleUnMadeTotal']}</td>
+			</tr>
+			{volist name="$data['roomInfo']" id="vo"}
+			{if condition="($vo.gender == '')"}
+			<tr>
+				<td>{$vo.room}</td>
+				<td>{$vo.totalroom}</td>
+				<td>{$vo.freeroom}</td>
+				<td>{$vo.unavaroom}</td>
+			</tr>
+			{elseif condition="$vo.gender == '女'" /}
+			<tr style="color: #df706c;">
+				<td><a href="{:url('room/details',['room'=>$vo.room])}" style="text-decoration: underline;color: #df706c;">{$vo.room}</a></td>
+				<td>{$vo.totalroom}</td>
+				<td><a href="{:url('room/emptyRoom',['room'=>$vo.room])}" style="text-decoration: underline;color: #df706c;">{$vo.freeroom}</a></td>
+				<td><a href="{:url('room/unavailableRoom',['room'=>$vo.room])}" style="text-decoration: underline;color: #df706c;">{$vo.unavaroom}</a></td>
+			</tr>
+			{else/}
+			<tr>
+				<td><a href="{:url('room/details',['room'=>$vo.room])}" style="text-decoration: underline">{$vo.room}</a></td>
+				<td>{$vo.totalroom}</td>
+				<td><a href="{:url('room/emptyRoom',['room'=>$vo.room])}" style="text-decoration: underline;">{$vo.freeroom}</a></td>
+				<td><a href="{:url('room/unavailableRoom',['room'=>$vo.room])}" style="text-decoration: underline;">{$vo.unavaroom}</a></td>
+			</tr>
+			{/if}
+			{/volist}
+			</tbody>
+		</table>
+		</div>
+    </div>
+
+<!--包含菜单文件-->
+{include file="public/footer" /}
+</div>
+</body>
+</html>
+

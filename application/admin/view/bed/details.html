@@ -1,0 +1,38 @@
+{include file="public/header" /}
+<div class="container">
+	<div class="row">
+		<div style="width: 100%;background: #ffffff;margin: 0 auto;text-align: center">
+			{if condition="$data == null"}
+			<div class="alert alert-info" role="alert">暂时还没有相关数据！</div>
+			{else/}
+		<table class="table table-striped">
+			<!--<caption>&nbsp;</caption>-->
+			<thead>
+			<tr class="column">
+				<th>楼座+楼层</th>
+				<th>床位</th>
+				<th>床位全空</th>
+				<th>部分空</th>
+			</tr>
+			</thead>
+			<tbody>
+			{volist name="$data" id="vo"}
+			<tr>
+				<td><a href="{:url('room/lists',['room'=>$vo.room])}" style="text-decoration: underline">{$vo.room}</a></td>
+				<td>{$vo.totalbed}</td>
+				<td><a href="{:url('bed/freeRoom',['room'=>$vo.room])}" style="text-decoration: underline">{$vo.freebed}</a></td>
+				<td>{$vo.partFreeBed}</td>
+			</tr>
+			{/volist}
+			</tbody>
+		</table>
+			{/if}
+		</div>
+    </div>
+
+<!--包含菜单文件-->
+{include file="public/footer" /}
+</div>
+</body>
+</html>
+

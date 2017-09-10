@@ -1,0 +1,111 @@
+{include file="public/header" /}
+<header class="header">
+    <div class="fix_nav">
+        <div style="max-width:768px;margin:0 auto;height: 44px;position: relative;background:#353535;">
+            <form action="{:url('search/index')}" method="post" id="searchform" name="searchform">
+                <div class="navbar-search left-search">
+                    <input type="text" id="keyword" name="data" value="" placeholder="姓名、学号" class="form-control">
+                </div>
+                <div class="nav-right">
+                    <input type="button" value="搜索" onclick="searchproduct();" class="img-responsive"
+                           style="color: #ffffff; text-align:center;line-height: 34px; background:#09bb07;border-radius: 5px;border:none;height:34px;vertical-align:middle;clear:both;padding:0px;"/>
+                </div>
+            </form>
+        </div>
+    </div>
+</header>
+<div class="container">
+    <div class="row">
+        <div id="slide">
+            <div class="hd">
+                <ul>
+                    <li class="on">1</li>
+                    <li class="on">2</li>
+                    <li class="on">3</li>
+                </ul>
+            </div>
+            <div class="bd">
+                <div class="tempWrap" style="overflow:hidden; position:relative;">
+                    <ul style="width: 3840px; position: relative; overflow: hidden; padding: 0px; margin: 0px; transition-duration: 200ms; transform: translateX(-768px);">
+                        <li style="display: table-cell; vertical-align: top; width: 768px;">
+                            <a href="" target="_blank">
+                                <img src="__STATIC__/img/61647775-f5d0-4cfe-b84f-96060eb8e2e3.jpg" alt="轮播"
+                                     ppsrc="img/0da8eb94-0159-4700-a6a5-bc007da5a853.jpg">
+                            </a>
+                        </li>
+                        <li style="display: table-cell; vertical-align: top; width: 768px;">
+                            <a href="" target="_blank">
+                                <img src="__STATIC__/img/0da8eb94-0159-4700-a6a5-bc007da5a853.jpg" alt="轮播"
+                                     ppsrc="img/61647775-f5d0-4cfe-b84f-96060eb8e2e3.jpg">
+                            </a>
+                        </li>
+                        <li style="display: table-cell; vertical-align: top; width: 768px;">
+                            <a href="" target="_blank">
+                                <img src="__STATIC__/img/efa1dc7b-1375-4876-acae-e344cae7d55c.jpg" alt="轮播"
+                                     ppsrc="img/efa1dc7b-1375-4876-acae-e344cae7d55c.jpg">
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script charset="utf-8" src="__STATIC__/js/TouchSlide.js"></script>
+
+    <script type="text/javascript">
+        TouchSlide({
+            slideCell: "#slide",
+            titCell: ".hd ul", //开启自动分页 autoPage:true ，此时设置 titCell 为导航元素包裹层
+            mainCell: ".bd ul",
+            effect: "left",
+            autoPlay: true,//自动播放
+            autoPage: true, //自动分页
+            switchLoad: "_src" //切换加载，真实图片路径为"_src"
+        });
+    </script>
+    <div class="row category">
+        <a href="{:url('room/index')}" class="col-xs-3">
+            <img class="img-responsive" src="__STATIC__/img/icon_rm.png">
+            <h4 class="pitch_index">房间</h4>
+            <span class="green">{$data['room']}</span>
+        </a>
+        <a href="{:url('bed/index')}" class="col-xs-3">
+            <img class="img-responsive" src="__STATIC__/img/icon_tm.png">
+            <h4 class="pitch_index">床位</h4>
+            <span class="green">{$data['bed']}</span>
+        </a>
+        <a href="{:url('college/index')}" class="col-xs-3">
+            <img class="img-responsive" src="__STATIC__/img/theme.png">
+            <h4 class="pitch_index">学院</h4>
+            <span class="green">{$data['college']}</span>
+        </a>
+        <!--<a href="{:url('gallery/index')}" class="col-xs-3">-->
+        <!--<img class="img-responsive" src="__STATIC__/img/icon_pp.png">-->
+        <!--<h4 class="pitch_index">楼座</h4>-->
+        <!--<span class="green">{$data['gallery']}</span>-->
+        <!--</a>-->
+        <a href="{:url('degree/index')}" class="col-xs-3">
+            <img class="img-responsive" src="__STATIC__/img/icon_degree.png">
+            <h4 class="pitch_index">学历</h4>
+            <span class="green">{$data['degree']}</span>
+        </a>
+
+    </div>
+
+</div>
+<!--包含菜单文件-->
+{include file="public/footer" /}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#slide img").each(function () {
+            var img_src = $(this).attr("_src");
+            $(this).attr("src", img_src);
+        });
+    });
+
+</script>
+</body>
+</html>
+

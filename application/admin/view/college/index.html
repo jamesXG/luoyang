@@ -1,0 +1,31 @@
+{include file="public/header" /}
+
+<div class="container">
+	<div class="row">
+		<div style="width: 100%;background: #ffffff;margin: 0 auto;text-align: center">
+		<table class="table table-striped">
+			<!--<caption>&nbsp;</caption>-->
+			<thead>
+			<tr class="column">
+				<th>学院</th>
+				<th>楼座数</th>
+			</tr>
+			</thead>
+			<tbody>
+			{volist name="$data" id="vo"}
+			<tr >
+				<td><a href="{:url('college/details',['college' => $vo.college])}" style="text-decoration: underline;">{$vo.college}</a></td>
+				<td>{$vo.room}</td>
+			</tr>
+			{/volist}
+			</tbody>
+		</table>
+		</div>
+    </div>
+
+<!--包含菜单文件-->
+{include file="public/footer" /}
+</div>
+</body>
+</html>
+

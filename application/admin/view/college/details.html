@@ -1,0 +1,36 @@
+{include file="public/header" /}
+<div class="container">
+	<div class="row">
+		<div style="width: 100%;background: #ffffff;margin: 0 auto;text-align: center">
+
+		<table class="table table-striped">
+			<!--<caption>&nbsp;</caption>-->
+			<thead>
+			<tr style="color: #393D49">
+				<td colspan="3">{$college}({$stuNum})</td>
+			</tr>
+			<tr class="column">
+				<th>楼座</th>
+				<th>性别</th>
+				<th>人数</th>
+			</tr>
+			</thead>
+			<tbody>
+			{volist name="$data" id="vo"}
+			<tr>
+				<td>{$vo.room}</td>
+				<td>{$vo.gender}</td>
+				<td>{$vo.stuNumber}</td>
+			</tr>
+			{/volist}
+			</tbody>
+		</table>
+		</div>
+    </div>
+
+<!--包含菜单文件-->
+{include file="public/footer" /}
+</div>
+</body>
+</html>
+

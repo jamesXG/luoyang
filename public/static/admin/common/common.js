@@ -19,10 +19,6 @@ function layer_laert() {
     layer.msg('功能暂未开放');
 }
 
-//关闭模态框
-function sure_layer() {
-
-}
 
 function go(url) {
     window.location(url);
@@ -75,5 +71,16 @@ $(".tel").blur(function () {
         return false;
     }
 });
+//验证输入的房间+床位数据是否符合规格
+$('#reviseRoom').blur(function(){
+       // alert(5);
+    reg = /\d{3}-\d{1}/;
+    str = $(this).val();
 
-//加载更多
+    if(reg.test(str)){
+
+    }else{
+        return false;
+    }
+});
+

@@ -1,15 +1,15 @@
 {include file="public/header" /}
 <header class="header">
     <div class="fix_nav">
-        <div style="max-width:768px;margin:0 auto;height: 44px;position: relative;background:#353535;">
+        <div style="max-width:768px;margin:0 auto;height: 44px;position: relative;">
             <form action="{:url('search/index')}" method="post" id="searchform" name="searchform">
                 <div class="navbar-search left-search">
-                    <input type="text" id="keyword" name="data" value="" placeholder="姓名、学号" class="form-control">
+                    <input type="text" id="keyword" name="data" value="" placeholder="姓名、学号、房间" class="form-control">
                 </div>
                 <div class="nav-right">
                     <input type="button" value="搜索" onclick="searchproduct();" class="img-responsive"
-                           style="color: #ffffff; text-align:center;line-height: 34px; background:#09bb07;border-radius: 5px;border:none;height:34px;vertical-align:middle;clear:both;padding:0px;"/>
-                </div>
+                           style=" color: #ffffff;line-height: 34px; background:rgba(9, 187, 7,.8);border:none;height:34px;vertical-align:middle;clear:both;padding:0px;"/>
+                </div>  <!--#09bb07-->
             </form>
         </div>
     </div>

@@ -13,6 +13,7 @@ use think\Controller;
 
 class BaseController extends Controller
 {
+
 //  替换数组中字段的特殊字符
 	public function arrReplace($data)
 	{

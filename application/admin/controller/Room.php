@@ -3,6 +3,10 @@
 namespace app\admin\controller;
 
 
+use app\admin\validate\GalleryMustBeRange;
+use app\admin\validate\ListsRoom;
+use app\lib\enum\BuildsEnum;
+
 class Room extends BaseController
 {
 	//初始化控制器
@@ -15,8 +19,9 @@ class Room extends BaseController
 
 	public function index()
 	{
+
 		$data = $this->getRoomInfo();
-//		print_r($data);exit();
+
 		return $this->fetch('', [
 			'data' => $data
 		]);
@@ -52,6 +57,7 @@ class Room extends BaseController
 //  楼座的详细数据
 	public function details($room = '')
 	{
+		(new GalleryMustBeRange())->goCheck();  //验证参数
 
 		$data = $this->obj->getCorrGalleryInfo($room);
 //      将字段中的#替换成-
@@ -66,6 +72,8 @@ class Room extends BaseController
 //	不可用房间详细信息列表
 	public function unavailableRoom($room = '')
 	{
+		(new GalleryMustBeRange())->goCheck();
+
 		$data = $this->obj->getUnavailableLists($room);
 
 		return $this->fetch('', [
@@ -75,12 +83,13 @@ class Room extends BaseController
 
 	public function lists($room = '', $roomCount = 0)
 	{
-		$room = str_replace('-', '#', $room);
+		(new ListsRoom())->goCheck();
+
+		$room = str_replace('-', BuildsEnum::DATAUNIT, $room);
 
 		$data = $this->obj->getGalleryInfoLists($room);
 //		print_r($data);exit();
 		$length = count($data);
-//		echo $length;exit();
 //      表头部分相关数据
 		$freeRoom = $this->obj->getGalleryInfoCount($room);
 //		入住人数
@@ -88,6 +97,7 @@ class Room extends BaseController
 		foreach ($freeRoom as $items) {
 			$count += $items['freeRoom'];
 		}
+
 		return $this->fetch('', [
 			'data' => $data,
 			'room' => $room,
@@ -100,6 +110,7 @@ class Room extends BaseController
 //	空房间的统计分类
 	public function emptyRoom($room = '')
 	{
+		(new GalleryMustBeRange())->goCheck();
 		$data = $this->obj->getEmptyRoomInfo($room);
 
 		return $this->fetch('',[
@@ -110,7 +121,6 @@ class Room extends BaseController
 	public function contentAjax()
 	{
 		$result = input('post.');
-//		print_r($result);
 
 		$data = $this->obj->getGalleryInfoLists($result['room'],$result['start']);
 		if(!$data){

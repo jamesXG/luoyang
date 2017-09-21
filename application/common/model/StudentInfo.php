@@ -247,7 +247,7 @@ class StudentInfo extends BaseModel
 	}
 
 //	获取指定学院名下的专业
-	public  function getNormalMajor($college)
+	public function getNormalMajor($college)
 	{
 		$data = Db::query("SELECT DISTINCT(major) FROM `student_info` WHERE college = '$college' AND room <> ''");
 
@@ -260,7 +260,7 @@ class StudentInfo extends BaseModel
 		$degree = model('Degree')->degreeLists();
 		$degree = array_convert($degree);
 		$data = [];
-		for($i=0,$len=count($degree);$i<$len;$i++) {
+		for ($i = 0, $len = count($degree); $i < $len; $i++) {
 
 			$data[] = Db::query("SELECT COUNT(DISTINCT(MID(room,1,length(room)-10))) AS room,degree FROM `student_info` WHERE degree = '$degree[$i]'");
 		}

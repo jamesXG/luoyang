@@ -11,7 +11,7 @@ namespace app\lib\exception;
 
 class PostException extends BaseException
 {
-	public $code = 202;
+	public $code = 400;
 	public $msg = '参数传递错误';
 	public $errorCode = 10001;
 }

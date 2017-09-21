@@ -3,6 +3,7 @@
 namespace app\admin\controller;
 
 use app\common\model\RoomInfo as RoomInfoModel;
+use app\lib\enum\BuildsEnum;
 
 class Bed extends BaseController
 {
@@ -52,7 +53,7 @@ class Bed extends BaseController
 
 	public function freeRoom($room = '')
 	{
-		$room = str_replace('-', '#', $room);
+		$room = str_replace('-', BuildsEnum::DATAUNIT, $room);
 
 		$data = RoomInfoModel::getFreeBedRoom($room);
 

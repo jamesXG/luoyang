@@ -22,9 +22,9 @@
                 </tr>
                 </tbody>
             </table>
-            {if condition="is_array_null($data)"}
-            <div class="alert alert-info" role="alert">暂时房间还未进行分配！</div>
-            {else/}
+            <!--{if condition="is_array_null($data)"}-->
+            <!--<div class="alert alert-info" role="alert">暂时房间还未进行分配！</div>-->
+            <!--{else/}-->
             {volist name="$data" id="vo"}
             <table class="table table-bordered">
                 <thead>
@@ -51,10 +51,10 @@
         </div>
         {if condition = "$length >= 8"}
         <div class="load">
-            <a class="load btn" href="javascript:;">点击显示更多</a>
+            <a class="load bt" href="javascript:;">点击显示更多</a>
         </div>
         {/if}
-        {/if}
+        <!--{/if}-->
     </div>
     <!--包含菜单文件-->
     {include file="public/footer" /}
@@ -64,7 +64,7 @@
     $(".container").fadeIn("slow");
     var nStart = 1;
     var roomInfo = $("#gallery").val();
-    $(".btn").click(function () {
+    $(".bt").click(function () {
         _this = $(this);
         url = "{:url('Room/contentAjax')}";
         _this.text("加载中……");
@@ -101,7 +101,7 @@
                 _this.text("点击显示更多");
             }else if(res.status == 0){
                 _this.text("没有更多信息了");
-                $(".load").fadeOut(1000);
+                $(".load").fadeOut(1500);
             }
         },'json');
 

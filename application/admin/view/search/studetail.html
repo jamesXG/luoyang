@@ -16,6 +16,10 @@
 					<td class="stutd">{$result['name']}</td>
 				</tr>
 				<tr>
+					<td>性别</td>
+					<td class="stutd">{$result['gender']}</td>
+				</tr>
+				<tr>
 					<td>学号</td>
 					<td class="stutd">{$result['stu_num']}</td>
 				</tr>
@@ -23,7 +27,7 @@
 					<td>宿舍</td>
 					<td colspan="2" class="stutd">
 						<a href="{:url('search/oneLists',['room'=>$result['room']])}" style="text-decoration: underline">{$result['room']}</a>
-						<button type="button" class="btn btn-info btn-xs position" onclick="edit('调整宿舍','{:url('search/reviseRoom',['room'=> $result[\'room\'],'id'=>$result[\'id\']])}')">调宿</button>
+						<button type="button" class="btn btn-info btn-xs position" onclick="edit('调整宿舍','{:url('search/reviseRoom',['room'=> $result[\'room\'],'id'=>$result[\'id\'],'gender'=>$result[\'gender\']])}')">调宿</button>
 					</td>
 				</tr>
 				<tr>

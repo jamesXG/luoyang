@@ -18,7 +18,7 @@ class Index extends Controller
 	}
 
 //  判断网站是否在微信中打开
-	function is_weChat()
+	public function is_weChat()
 	{
 		if (strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false) {
 			return true;

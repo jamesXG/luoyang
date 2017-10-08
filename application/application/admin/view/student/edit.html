@@ -1,0 +1,103 @@
+{include file="public/header" /}
+
+<div class="container">
+	<div class="row">
+		<form action="{:url('student/save')}" method="post" id="form">
+		<div style="width: 100%;background: #ffffff;margin: 0 auto;text-align: center">
+			<table class="table">
+				<tbody>
+				<tr>
+					<img src="__STATIC__/images/user.png" style="width: 20%;" />
+				</tr>
+				<input type="hidden" name="id" class="inputUp" value="{$data['id']}">
+				<tr>
+					<td>班级</td>
+					<td><input type="text" name="class" class="inputUp" value="{$data['class']}"></td>
+				</tr>
+				<tr>
+					<td>电话</td>
+					<td><input type="tel" name="tel" class="inputUp tel" value="{$data['tel']}" placeholder="手机号码"></td>
+				</tr>
+				<tr>
+					<td>学院</td>
+					<td>
+						<select name="college" class="inputUp sel college" >
+							<option value="0">请选择</option>
+							{volist name="$college" id="vo"}
+							<option value="{$vo.college}" {if condition="$data['college'] eq $vo.college"}selected="selected"{/if}>{$vo.college}</option>
+							{/volist}
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>专业</td>
+					<td>
+					<select name="major" class="inputUp sel major" >
+						<option value="{$data['major']}">{$data['major']}</option>
+					</select>
+					</td>
+				</tr>
+				<tr>
+					<td>学历</td>
+					<td>
+						<select name="degree" class="inputUp sel" >
+							<option value="0">请选择</option>
+							{volist name="$degree" id="vo"}
+							<option value="{$vo.degree}" {if condition="$data['degree'] eq $vo.degree"}selected="selected"{/if}>{$vo.degree}</option>
+							{/volist}
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>民族</td>
+					<td>
+						<select name="nation" class="inputUp sel" >
+							<option value="0">请选择</option>
+							{volist name="$nation" id="vo"}
+							<option value="{$vo}" {if condition="$data['nation'] eq $vo"}selected="selected"{/if}>{$vo}</option>
+							{/volist}
+						</select>
+					</td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+			<div style="width: 100%;background: #ffffff;margin: 0 auto;text-align: center">
+				<table class="table">
+					<tbody>
+					<tr>
+						<td>姓名</td>
+						<td><input type="text" name="name" class="inputUp" value="{$data['name']}" disabled></td>
+					</tr>
+					<tr>
+						<td>学号</td>
+						<td><input type="text" name="stu_num" class="inputUp" value="{$data['stu_num']}" disabled></td>
+					</tr>
+					<tr>
+						<td>宿舍</td>
+						<td><input type="text" name="room" class="inputUp" value="{$data['room']}" disabled></td>
+					</tr>
+					<tr>
+						<td>年级</td>
+						<td><input type="text" name="grade" class="inputUp" value="{$data['grade']}" disabled></td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="self-btn">
+				<button type="submit" class="btn btn-success btn-self-lg">提交</button>
+			</div>
+		</form>
+	</div>
+	</div>
+	<!--包含菜单文件-->
+	{include file="public/footer" /}
+</div>
+</body>
+<script>
+    var SCOPE = {
+        'college':'{:url('admin/college/getCollege')}'
+    }
+</script>
+</html>
+

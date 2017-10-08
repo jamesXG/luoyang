@@ -1,0 +1,32 @@
+{include file="public/header" /}
+<div class="container">
+	<div class="row">
+		<div style="width: 100%;background: #ffffff;margin: 0 auto;text-align: center">
+			<table class="table table-striped">
+				<thead>
+				<tr class="column">
+					<th>楼座</th>
+					<th>{$gallery}</th>
+				</tr>
+				<tr class="column">
+					<th>学历</th>
+					<th>人数</th>
+				</tr>
+				</thead>
+				<tbody>
+				{volist name="$data" id="vo"}
+				<tr>
+					<td>{$vo.degree}</td>
+					<td>{$vo.stuNum}</td>
+				</tr>
+				{/volist}
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<!--包含菜单文件-->
+	{include file="public/footer" /}
+</div>
+</body>
+</html>

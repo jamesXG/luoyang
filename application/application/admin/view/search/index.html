@@ -1,0 +1,36 @@
+{include file="public/header" /}
+
+<div class="container">
+	<div class="row">
+		<div style="width: 100%;background: #ffffff;margin: 0 auto;text-align: center">
+			{if condition="$result == null"}
+			<div class="alert alert-info" role="alert">暂时还没有相关数据！</div>
+			{else/}
+		<table class="table table-striped">
+			<!--<caption>&nbsp;</caption>-->
+			<thead>
+			<tr class="column">
+				<th>姓名</th>
+				<th>性别</th>
+				<th>专业</th>
+			</tr>
+			</thead>
+			<tbody>
+				{volist name="$result" id="vo"}
+				<tr>
+					<td><a href="{:url('Search/stuDetail',['id' => $vo.id])}" class="linkMale">{$vo.name}</a></td>
+					<td>{$vo.gender}</td>
+					<td>{$vo.major}</td>
+				</tr>
+				{/volist}
+			</tbody>
+		</table>
+			{/if}
+		</div>
+    </div>
+<!--包含菜单文件-->
+{include file="public/footer" /}
+</div>
+</body>
+</html>
+

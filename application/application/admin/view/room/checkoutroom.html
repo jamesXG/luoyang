@@ -1,0 +1,29 @@
+{include file="public/header" /}
+<div class="container">
+    <div class="row">
+        <form method="post" id="update" name="update" action="{:url('room/checkOutSave')}">
+            <div class="form">
+                <div class="form main">
+                    <div class="form main input">
+                        <div class=" input select">
+                            <input type="text" class="form-control" value="{$room}" id="room" name="room" readonly>
+                        </div>
+                    </div>
+                    <div class="form main input">
+                        <input type="text" class="form-control" value="" id="reason" name="reason" placeholder="请输入退宿原因" required>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" name="id" value="{$id}">
+            <input type="hidden" name="stu_num" value="{$stu_num}">
+            <input type="hidden" name="beRoom" value="{$beRoom}">
+            <div class="buttons">
+                <button type="submit" class="btn btn-success" style="display: none;" >确定</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+{load href="__STATIC__/common/common.js" /}
+</html>
+

@@ -1,0 +1,59 @@
+{include file="public/header" /}
+
+<div class="container">
+	<div class="row">
+		<div style="width: 100%;background: #ffffff;margin: 0 auto;text-align: center">
+		<table class="table table-striped">
+			<!--<caption>&nbsp;</caption>-->
+			<thead>
+			<tr class="column">
+				<th>楼座</th>
+				<th>学历</th>
+			</tr>
+			</thead>
+			<tbody>
+			{volist name="$data" id="vo"}
+			{if condition="$vo.gender == '女'"}
+			<tr>
+				<td><a href="{:url('degree/details',['gallery' => $vo.room])}" class="linkFemale">{$vo.room}</a></td>
+				<td>{$vo.degreeCount}</td>
+			</tr>
+			{elseif condition="$vo.gender == ''" /}
+			<tr>
+				<td>{$vo.room}</td>
+				<td>{$vo.degreeCount}</td>
+			</tr>
+			{else/}
+			<tr>
+				<td><a href="{:url('degree/details',['gallery' => $vo.room])}" class="linkMale">{$vo.room}</a></td>
+				<td>{$vo.degreeCount}</td>
+			</tr>
+			{/if}
+			{/volist}
+			</tbody>
+		</table>
+			<table class="table">
+				<thead>
+					<tr class="column">
+						<td>学历</td>
+						<td>楼座数</td>
+					</tr>
+				</thead>
+				<tbody>
+					{volist name="$info" id="vo"}
+					<tr style="background: #393D49;color: #F0F0F0">
+						<td>{$vo.degree}</td>
+						<td>{$vo.room}</td>
+					</tr>
+					{/volist}
+				</tbody>
+			</table>
+		</div>
+    </div>
+
+<!--包含菜单文件-->
+{include file="public/footer" /}
+</div>
+</body>
+</html>
+

@@ -1,0 +1,31 @@
+{include file="public/header" /}
+
+<div class="container">
+	<div class="row">
+		<div style="width: 100%;background: #ffffff;margin: 0 auto;text-align: center">
+		<table class="table table-striped">
+			<!--<caption>&nbsp;</caption>-->
+			<thead>
+			<tr>
+				<th>楼座</th>
+				<th>学院数</th>
+			</tr>
+			</thead>
+			<tbody>
+			{volist name="$count" id="vo"}
+			<tr>
+				<td><a href="{:url('gallery/details',['gallery' => $vo.room])}" class="linkMale">{$vo.room}</a></td>
+				<td>{$vo.college}</td>
+			</tr>
+			{/volist}
+			</tbody>
+		</table>
+		</div>
+    </div>
+
+<!--包含菜单文件-->
+{include file="public/footer" /}
+</div>
+</body>
+</html>
+

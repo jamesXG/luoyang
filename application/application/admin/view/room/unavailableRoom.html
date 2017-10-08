@@ -1,0 +1,35 @@
+{include file="public/header" /}
+
+<div class="container">
+    <div class="row">
+        <div style="width: 100%;background: #ffffff;margin: 0 auto;text-align: center">
+            {if condition="$data == null"}
+            <div class="alert alert-info" role="alert">暂时还没有相关信息！</div>
+            {else/}
+            <table class="table table-striped">
+                <!--<caption>&nbsp;</caption>-->
+                <thead>
+                <tr class="column">
+                    <th>房间</th>
+                    <th>不可用原因</th>
+                </tr>
+                </thead>
+                <tbody>
+                {volist name="$data" id="vo"}
+                <tr>
+                    <td>{$vo.room}</td>
+                    <td>{$vo.reason}</td>
+                </tr>
+                {/volist}
+                </tbody>
+            </table>
+            {/if}
+        </div>
+    </div>
+
+    <!--包含菜单文件-->
+    {include file="public/footer" /}
+</div>
+</body>
+</html>
+

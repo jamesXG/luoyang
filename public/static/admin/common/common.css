@@ -1,7 +1,15 @@
 .table > thead > tr > th {
     text-align: center;
 }
-
+.linkFemale{
+    text-decoration: underline;
+    color: #df706c;
+    font-size: 14px;
+}
+.linkMale{
+    text-decoration: underline;
+    font-size: 14px;
+}
 .stutd {
     width: 60%;
     text-align: left;
@@ -56,7 +64,20 @@
     right: 10px;
     top: 10px;
 }
-
+.out{
+    position: absolute;
+    right: 10px;
+    top: 50px;
+}
+.check{
+    border: none;
+}
+.checkroom{
+    color: #FF5722;
+    cursor: pointer;
+    border: none;
+    background-color: #ffffff;
+}
 .self-btn {
     text-align: center
 }
@@ -114,7 +135,10 @@
     background-color: #2F4056;
     color: #F0F0F0;
 }
-
+.columnBottom{
+    background-color: #393D49;
+    color: #F2F2F2;
+}
 /*#more:hover{transform: rotate(90deg);transition: transform 0.5s;}*/
 /*.myModal{width: 80%;height: 300px;background: #ffffff;position: absolute;left: 0;right: 0;top: 30%;bottom: 0;margin: 0 auto;}*/
 /*z-index: 9999;border-radius: 10px;}

@@ -1,0 +1,144 @@
+.table > thead > tr > th {
+    text-align: center;
+}
+.linkFemale{
+    text-decoration: underline;
+    color: #df706c;
+    font-size: 14px;
+}
+.linkMale{
+    text-decoration: underline;
+    font-size: 14px;
+}
+.stutd {
+    width: 60%;
+    text-align: left;
+}
+
+#nodata {
+    text-align: center;
+    color: #0a6999
+}
+
+.position {
+    float: right
+}
+
+.form {
+    width: 100%;
+    height: auto;
+    background: #ffffff;
+    margin: 0 auto
+}
+
+.main {
+    width: 90%;
+    text-align: center;
+}
+
+.input {
+    width: 100%;
+    height: 40px;
+    margin-bottom: 5px
+}
+
+.buttons {
+    text-align: right;
+    margin-right: 20px;
+}
+
+.btn-self-lg {
+    padding: 10px;
+    font-size: 1.4rem;
+    margin: 0 auto
+}
+
+.edit {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+}
+
+.notice {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+.out{
+    position: absolute;
+    right: 10px;
+    top: 50px;
+}
+.check{
+    border: none;
+}
+.checkroom{
+    color: #FF5722;
+    cursor: pointer;
+    border: none;
+    background-color: #ffffff;
+}
+.self-btn {
+    text-align: center
+}
+
+.btn-self-lg {
+    width: 30%;
+}
+
+.modify_info {
+    width: 100%;
+    height: 200px
+}
+
+.inputUp {
+    width: 50%;
+    height: auto;
+    border: none;
+    margin-left: 35%;
+    text-align: right;
+    background: none
+}
+
+.sel {
+    width: 50%;
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    margin-left: 35%;
+    direction: rtl
+}
+
+.sel option {
+    direction: ltr
+}
+
+/*加载更多*/
+.load {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.load a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: #2F4056;
+}
+.load a:hover{
+    text-decoration: none;
+}
+
+/*表格的头部导航颜色*/
+.column {
+    background-color: #2F4056;
+    color: #F0F0F0;
+}
+.columnBottom{
+    background-color: #393D49;
+    color: #F2F2F2;
+}
+/*#more:hover{transform: rotate(90deg);transition: transform 0.5s;}*/
+/*.myModal{width: 80%;height: 300px;background: #ffffff;position: absolute;left: 0;right: 0;top: 30%;bottom: 0;margin: 0 auto;}*/
+/*z-index: 9999;border-radius: 10px;}

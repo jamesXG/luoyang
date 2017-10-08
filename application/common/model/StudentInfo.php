@@ -10,6 +10,7 @@ namespace app\common\model;
 
 
 use think\Db;
+use think\Exception;
 
 class StudentInfo extends BaseModel
 {
@@ -114,7 +115,7 @@ class StudentInfo extends BaseModel
 //  查询学生详细信息
 	public static function getStuInfo($id = '')
 	{
-		$display = ['id', 'name', 'room', 'stu_num', 'class', 'major', 'college', 'grade', 'gender', 'degree', 'tel', 'nation'];
+		$display = ['id', 'name', 'room', 'stu_num', 'class', 'major', 'college', 'grade', 'gender', 'degree', 'tel', 'nation', 'len_school'];
 		$data = [
 			'id' => $id
 		];
@@ -270,5 +271,88 @@ class StudentInfo extends BaseModel
 		return $data;
 	}
 
+	/**
+	 * @param $room 调整后的宿舍
+	 * @param $beRoom 调整前的宿舍
+	 * @param id定位
+	 */
+	public function adjustmentRoom($room, $id)
+	{
+
+		$result = Db::query("select * from student_info where id = ?", [$id]);
+		$data = array_conversion($result);
+//			给$room的字段里插入学生数据
+		$roomRes = Db::execute("UPDATE student_info SET stu_num = :stu_num,name = :name,nation=:nation,class=:class,major=:major
+			,college=:college,grade=:grade,degree=:degree,len_school=:len_school,birthday=:birthday,tel=:tel,openid=:openid,
+			header_img=:header_img WHERE room = :room", ['stu_num' => $data['stu_num'], 'name' => $data['name'], 'nation' => $data['nation'],
+			'class' => $data['class'], 'major' => $data['major'], 'college' => $data['college'], 'grade' => $data['grade'], 'degree' => $data['degree'],
+			'len_school' => $data['len_school'], 'birthday' => $data['birthday'], 'tel' => $data['tel'], 'openid' => $data['openid'],
+			'header_img' => $data['header_img'], 'room' => $room]);
+//			将$bedRoom里的数据清空
+		$bedRoomRes = Db::execute("UPDATE student_info SET stu_num = '',name = '',nation='',class='',major=''
+			,college='',grade='',degree='',len_school='',birthday='',tel='',openid='',
+			header_img='' WHERE id = :id", ['id' => $id]);
+
+		return $roomRes && $bedRoomRes ? true : false;
+
+	}
+
+	/**
+	 * 退宿
+	 * @param $room 宿舍号 安园23栋301-2
+	 * @param $id 房间id  2904
+	 * @param $reason 退宿原因
+	 */
+	public function upCheckOutRoom($room, $id, $reason, $stu_num, $beRoom)
+	{
+		Db::startTrans();   //事务开启
+		try {
+			Db::execute("UPDATE student_info SET room = '' WHERE id = :id", ['id' => $id]);
+
+			Db::execute("UPDATE room_info SET empty_bed_num = empty_bed_num + 1 WHERE room = :room", ['room' => $beRoom]);
+
+			Db::execute("INSERT INTO student_info (room) VALUES ('$room')");
+
+			Db::execute("INSERT INTO check_room (room,stu_num,reason) VALUES ('$room','$stu_num','$reason')");
+
+			Db::commit();  //提交事务
+			return true;
+		} catch (Exception $e) {
+			Db::rollback();  //事务回滚
+		}
+
+	}
+
+//	入住更新操作
+	public function getIntoRoom($room, $id)
+	{
+
+		Db::startTrans();
+		try {
+			Db::execute("UPDATE student_info SET room = :room WHERE id = :id", ['room' => $room, 'id' => $id]);
+			Db::execute("DELETE FROM student_info WHERE room = :room AND stu_num = '' AND name = ''", ['room' => $room]);
+
+			Db::commit();
+			return true;
+		} catch (Exception $e) {
+			Db::rollback();
+		}
+	}
+
+//  通过学号获取学生部分信息
+	public function getByStuNum($stu_num)
+	{
+		$result = Db::query("SELECT id,room,name,stu_num,major,gender FROM student_info WHERE stu_num = '$stu_num'");
+
+		return array_conversion($result);
+	}
+
+//  通过ID获取房间名
+	public function getRoomByID($id)
+	{
+		$result = Db::query("SELECT room FROM student_info WHERE id = '$id'");
+
+		return array_conversion($result);
+	}
 
 }

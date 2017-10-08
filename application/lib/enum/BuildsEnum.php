@@ -16,4 +16,5 @@ class BuildsEnum
 	const DATAUNIT = '#';  //最初的楼座单位
 	const MALE = '男';
 	const FEMALE = '女';
+	const GALATE = '-';
 }

@@ -129,3 +129,29 @@ function is_array_null($arr) {
 		return false;
 	}
 }
+
+//检测在调宿过程中是否房间为空
+function is_room_null($data){
+	foreach ($data as $k => $v){
+		if(empty($data)){
+			return true;
+		}
+		foreach ($v as $key=>$value){
+			if($value == null){
+				return true;
+			}
+		}
+
+		return false;
+
+	}
+}
+
+function array_conversion($arr){
+	$data = [];
+	foreach ($arr as $value){
+		$data = $value;
+	}
+
+	return $data;
+}

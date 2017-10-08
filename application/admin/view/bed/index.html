@@ -31,13 +31,13 @@
 			{volist name="$data" id="vo"}
 			{if condition="$vo.sex == '女'"}
 			<tr style="color: #df706c">
-				<td><a href="{:url('bed/details',['room'=> $vo.room])}" style="text-decoration: underline;color: #df706c">{$vo.room}</a></td>
+				<td><a href="{:url('bed/details',['room'=> $vo.room])}" class="linkFemale">{$vo.room}</a></td>
 				<td>{$vo.rooms}</td>
 				<td>{$vo.freerooms}</td>
 			</tr>
 			{else/}
 			<tr>
-				<td><a href="{:url('bed/details',['room'=> $vo.room])}" style="text-decoration: underline">{$vo.room}</a></td>
+				<td><a href="{:url('bed/details',['room'=> $vo.room])}" class="linkMale">{$vo.room}</a></td>
 				<td>{$vo.rooms}</td>
 				<td>{$vo.freerooms}</td>
 			</tr>

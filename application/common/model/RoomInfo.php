@@ -137,10 +137,9 @@ class RoomInfo extends BaseModel
 	}
 
 //  每个楼层下的详情信息
-	public function getGalleryInfoLists($room,$start = 0)
+	public function getGalleryInfoLists($room, $start = 0)
 	{
-//		$room = Db::query("SELECT room FROM `room_info` WHERE room LIKE '$room%'");
-		$room = Db::table('room_info')->where('room','like',$room.'%')->page($start,8)->select();
+		$room = Db::table('room_info')->where('room', 'like', $room . '%')->page($start, 8)->select();
 
 		$arr = array_column($room, 'room');
 
@@ -202,5 +201,46 @@ class RoomInfo extends BaseModel
 		$data = Db::query("SELECT room,bed_num FROM `room_info` WHERE room LIKE '$room%' AND bed_num = empty_bed_num AND status = 1");
 
 		return $data;
+	}
+
+	public function isEmptyRoom($room)
+	{
+//		SELECT stu_num,name FROM student_info WHERE room = '安园16#114-1'
+		$data = Db::query("SELECT stu_num,name FROM student_info WHERE room = '$room'");
+
+		return $data;
+	}
+
+//	获取房间的床位数
+	public function getRoomBedNum($room)
+	{
+
+		$data = Db::query("SELECT room,bed_num FROM room_info WHERE room LIKE '$room'");
+
+		$data = array_convert($data);
+
+		return $data;
+	}
+
+	/**
+	 * 更新空床位数安园23栋301-4
+	 * @param $room 调整后的宿舍
+	 * @param $beRoom 调整前的宿舍
+	 */
+	public function updateEmptyBed($room, $beRoom)
+	{
+//		调整后的宿舍空床位数减一
+		$resultR = Db::execute("UPDATE room_info SET empty_bed_num = empty_bed_num - 1 WHERE room=:room AND status = 1", ['room' => $room]);
+//		调整前的宿舍空床位数加一
+		$resultB = Db::execute("UPDATE room_info SET empty_bed_num = empty_bed_num + 1 WHERE room=:room AND status = 1", ['room' => $beRoom]);
+
+		return $resultR && $resultB ? true : false;
+	}
+
+//	入住成功后更新空床位数
+	public function intoSuccess($room)
+	{
+		$result = Db::execute("UPDATE room_info SET empty_bed_num = empty_bed_num - 1 WHERE room=:room AND status = 1", ['room' => $room]);
+		return $result ? true : false;
 	}
 }

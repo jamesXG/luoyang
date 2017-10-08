@@ -3,6 +3,8 @@
 namespace app\admin\controller;
 
 
+use app\lib\exception\PostException;
+
 class College extends BaseController
 {
 	//初始化控制器
@@ -43,7 +45,7 @@ class College extends BaseController
 		$college = input('post.');
 
 		if(!$college){
-			$this->error('参数不合法');
+			throw new PostException();
 		}
 
 		$major = $this->obj->getNormalMajor($college['college']);

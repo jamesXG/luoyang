@@ -18,7 +18,7 @@
 			<tbody>
 				{volist name="$result" id="vo"}
 				<tr>
-					<td><a href="{:url('Search/stuDetail',['id' => $vo.id])}" style="text-decoration: underline">{$vo.name}</a></td>
+					<td><a href="{:url('Search/stuDetail',['id' => $vo.id])}" class="linkMale">{$vo.name}</a></td>
 					<td>{$vo.gender}</td>
 					<td>{$vo.major}</td>
 				</tr>

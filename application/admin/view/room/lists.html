@@ -14,7 +14,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr class="success">
+                <tr>
                     <td>{$room}</td>
                     <td>{$roomCount}</td>
                     <td>{$count}</td>
@@ -22,26 +22,35 @@
                 </tr>
                 </tbody>
             </table>
-            <!--{if condition="is_array_null($data)"}-->
-            <!--<div class="alert alert-info" role="alert">暂时房间还未进行分配！</div>-->
-            <!--{else/}-->
+
             {volist name="$data" id="vo"}
             <table class="table table-bordered">
                 <thead>
                 {volist name="$vo['info']" id="i"}
                 <tr>
-                    {$i.room}--{$i.college}
+                    <td colspan="3" style="background: #d6d5c2;color:#ffffff;border-top: hidden;border-left: hidden;border-right: hidden">{$i.room}--{$i.college}</td>
                 </tr>
                 {/volist}
                 </thead>
                 <tbody style="text-align: center">
                 {volist name="vo['lists']" id="p"}
+                {if condition="$p.name == null"}
+                <tr style="height: 25px">
+                    <td style="width: 20%">{$p.room}</td>
+                    <td style="width: 40%"><input type="submit" name="sub" class="linkMale checkroom" value="入住" /></td>
+                    <td style="width: 50%">
+                        <input type="text" class="check" value="" id="stu_num" maxlength="9" name="major" placeholder="请输入学号" />
+                        <input type="hidden" id="room" name="id" value="{$p.id}">
+                    </td>
+                </tr>
+                {else/}
                 <tr style="height: 25px">
                     <td style="width: 20%">{$p.room}</td>
                     <td style="width: 40%"><a href="{:url('Search/stuDetail',['id' => $p.id])}"
-                                              style="text-decoration: underline">{$p.name}</a></td>
+                                              class="linkMale">{$p.name}</a></td>
                     <td style="width: 50%">{$p.major}</td>
                 </tr>
+                {/if}
                 {/volist}
                 </tbody>
             </table>
@@ -54,56 +63,73 @@
             <a class="load bt" href="javascript:;">点击显示更多</a>
         </div>
         {/if}
-        <!--{/if}-->
     </div>
-    <!--包含菜单文件-->
     {include file="public/footer" /}
 </div>
 </body>
 <script>
+    var SCOPE = {
+        'room':'{:url('admin/room/getIntoRoom')}'
+    }
+
     $(".container").fadeIn("slow");
     var nStart = 1;
     var roomInfo = $("#gallery").val();
-    $(".bt").click(function () {
+    $(window).scroll(function(){
+        //获取当前页面底部距离顶部的高度距离
+        var nowTop = Math.ceil($(document).scrollTop()+$(window).height());
         _this = $(this);
         url = "{:url('Room/contentAjax')}";
-        _this.text("加载中……");
-        nStart++;
-        $.post(url,{start:nStart,room:roomInfo},function (res) {
-            if(res.status == 1) {
-                data = res.data;
-                info_html = '';
-                $(data).each(function () {
-                    info_html += "<table class='table table-bordered'>"+"<thead>";
-                    for(var i=0,len=this.info.length;i<len;i++){
-                        info_html +=
-                            "<tr>" + this.info[i]['room'] + "--" + this.info[i]['college']+
-                            "</tr>";
+        if($(document).height()<=nowTop) {
+            _this.text("加载中……");
+            nStart++;
+            $.post(url, {start: nStart, room: roomInfo}, function (res) {
+                if (res.status == 1) {
+                    data = res.data;
+                    info_html = '';
+                    $(data).each(function () {
+                        info_html += "<table class='table table-bordered'>" + "<thead>";
+                        for (var i = 0, len = this.info.length; i < len; i++) {
+                            info_html +=
+                                "<tr><td colspan='3' style='background: #d6d5c2;color:#ffffff;border-top: hidden;border-left: hidden;border-right: hidden'>" + this.info[i]['room'] + "--" + this.info[i]['college'] +
+                                "</td></tr>";
                         }
 
                         info_html += "</thead><tbody style='text-align: center'>";
-                    for(var j=0,len = this.lists.length; j<len; j++) {
-                        ID = this.lists[j]['id'];
-                        hrefUrl = "{:url('Search/stuDetail')}?id=" + ID; //切记此种传值方式
+                        for (var j = 0, len = this.lists.length; j < len; j++) {
+                            ID = this.lists[j]['id'];
+                            hrefUrl = "{:url('Search/stuDetail')}?id=" + ID; //切记此种传值方式
+                            if (this.lists[j]['name'] == '') {
+                                info_html +=
+                                    "<tr style='height: 25px'>" +
+                                    "<td style='width: 20%'>" + this.lists[j]['room'] + "</td>" +
+                                    "<td style='width: 40%'>" +
+                                    "<input type='submit' name='sub' class='linkMale checkroom' value='入住' /></td>" +
+                                    "<td style='width: 50%'><input type='text' class='check' value='' maxlength='9' name='major' placeholder='请输入学号'>" +
+                                    "<input type='hidden' id='room' name='id' value=" + this.lists[j]['id'] + "></td></tr>";
 
-                        info_html +=
-                            "<tr style='height: 25px'>" +
-                            "<td style='width: 20%'>" + this.lists[j]['room'] + "</td>" +
-                            "<td style='width: 40%'>" +
-                            "<a href='"+hrefUrl+"'style='text-decoration: underline'>" + this.lists[j]['name'] + "</a></td>" +
-                            "<td style='width: 50%'>" + this.lists[j]['major'] +
-                            "</td></tr>";
+                            } else {
+                                info_html +=
+                                    "<tr style='height: 25px'>" +
+                                    "<td style='width: 20%'>" + this.lists[j]['room'] + "</td>" +
+                                    "<td style='width: 40%'>" +
+                                    "<a href='" + hrefUrl + "'style='text-decoration: underline'>" + this.lists[j]['name'] + "</a></td>" +
+                                    "<td style='width: 50%'>" + this.lists[j]['major'] +
+                                    "</td></tr>";
+                            }
                         }
 
-                        info_html +="</tbody></table>";
-                });
-                $(".loadMain").before(info_html);
-                _this.text("点击显示更多");
-            }else if(res.status == 0){
-                _this.text("没有更多信息了");
-                $(".load").fadeOut(1500);
-            }
-        },'json');
+                        info_html += "</tbody></table>";
+                    });
+                    $(".loadMain").before(info_html);
+                    _this.text("点击显示更多");
+                } else if (res.status == 0) {
+                    _this.text("没有更多信息了");
+                    $(".load").fadeOut(1500);
+                    return false;
+                }
+            }, 'json');
+        }
 
     });
 </script>

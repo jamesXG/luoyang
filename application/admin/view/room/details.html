@@ -15,7 +15,7 @@
                 <tbody>
                 {volist name="$data" id="vo"}
                 <tr>
-                    <td><a href="{:url('room/lists',['room'=>$vo.room,'roomCount'=>$vo.totalrooms])}" style="text-decoration: underline">{$vo.room}</a></td>
+                    <td><a href="{:url('room/lists',['room'=>$vo.room,'roomCount'=>$vo.totalrooms])}" class="linkMale">{$vo.room}</a></td>
                     <td>{$vo.totalrooms}</td>
                     <td>{$vo.freerooms}</td>
                 </tr>

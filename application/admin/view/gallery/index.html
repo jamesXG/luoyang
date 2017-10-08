@@ -14,7 +14,7 @@
 			<tbody>
 			{volist name="$count" id="vo"}
 			<tr>
-				<td><a href="{:url('gallery/details',['gallery' => $vo.room])}" style="text-decoration: underline">{$vo.room}</a></td>
+				<td><a href="{:url('gallery/details',['gallery' => $vo.room])}" class="linkMale">{$vo.room}</a></td>
 				<td>{$vo.college}</td>
 			</tr>
 			{/volist}

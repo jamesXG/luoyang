@@ -24,9 +24,7 @@ class BaseValidate extends Validate
 		$result = $this->batch()->check($params);
 		if (!$result) {
 			$e = new ParameterException([
-
 				'msg' => $this->error,
-
 			]);
 
 			throw $e;
@@ -46,5 +44,17 @@ class BaseValidate extends Validate
 	protected function isPositiveInteger($value, $rule = '', $data = '', $field = '')
 	{
 		return is_numeric($value) && is_int($value + 0) && ($value + 0) > 0 ? true : false;
+	}
+
+	//	验证房间格式
+	public function isTrueRoom($value)
+	{
+		$rule = '^\d{3}-\d{1}$^';
+		$result = preg_match($rule, $value);
+		if ($result) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

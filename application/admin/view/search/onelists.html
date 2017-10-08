@@ -4,7 +4,7 @@
     <div class="row">
         <div style="width: 100%;background: #ffffff;margin: 0 auto;text-align: center">
             <table class="table table-bordered">
-                <tr class="success">
+                <tr class="column">
                     <td colspan="2">房间</td>
                     <td>{$room}</td>
                 </tr>
@@ -15,11 +15,19 @@
                 </tr>
                 <tbody style="text-align: center">
                 {volist name="$data" id="vo"}
+                {if condition="$vo.name != null"}
                 <tr style="height: 25px">
                     <td style="width: 20%">{$vo.num}</td>
-                    <td style="width: 40%"><a href="{:url('Search/stuDetail',['id' => $vo.id])}" style="text-decoration: underline">{$vo.name}</a></td>
+                    <td style="width: 40%"><a href="{:url('Search/stuDetail',['id' => $vo.id])}" class="linkMale">{$vo.name}</a></td>
                     <td style="width: 40%">{$vo.major}</td>
                 </tr>
+                {else/}
+                <tr style="height: 25px">
+                    <td style="width: 20%">{$vo.num}</td>
+                    <td style="width: 40%"><a  class="linkMale checkroom">入住</a></td>
+                    <td style="width: 50%"><input type="text" class="check" value="" id="stu_num" maxlength="9" name="major" placeholder="请输入学号"></td>
+                </tr>
+                {/if}
                 {/volist}
                 </tbody>
             </table>

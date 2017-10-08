@@ -4,12 +4,16 @@
 	<div class="row">
 		<div style="width: 100%;background: #ffffff;margin: 0 auto;text-align: center">
 		<table class="table table-striped">
-			<!--<caption>&nbsp;</caption>-->
 			<tbody>
 				<tr class="success">
 					<a href="{:url('student/edit',['id' => $result['id']])}"><button type="button" class="btn btn-success btn-xs edit">编辑</button></a>
 					<img src="__STATIC__/images/user.png" style="width: 20%;">
 					<button type="button" onclick="layer_laert()" class="btn btn-danger btn-xs notice">通知</button>
+					{if condition="$result['room'] == null"}
+					<button type="button" onclick="edit('入住','{:url('room/reviseRoom',['room'=> $result[\'room\'],'id'=>$result[\'id\'],'gender'=>$result[\'gender\'],'stu_num'=>$result[\'stu_num\']])}')" class="btn btn-info btn-xs out">入住</button>
+					{else/}
+					<button type="button" onclick="edit('退宿','{:url('room/checkOutRoom',['room'=> $result[\'room\'],'id'=>$result[\'id\'],'stu_num'=>$result[\'stu_num\']])}')" class="btn btn-info btn-xs out">退宿</button>
+					{/if}
 				</tr>
 				<tr>
 					<td>姓名</td>
@@ -26,8 +30,11 @@
 				<tr>
 					<td>宿舍</td>
 					<td colspan="2" class="stutd">
-						<a href="{:url('search/oneLists',['room'=>$result['room']])}" style="text-decoration: underline">{$result['room']}</a>
-						<button type="button" class="btn btn-info btn-xs position" onclick="edit('调整宿舍','{:url('search/reviseRoom',['room'=> $result[\'room\'],'id'=>$result[\'id\'],'gender'=>$result[\'gender\']])}')">调宿</button>
+						<a href="{:url('search/oneLists',['room'=>$result['room']])}" class="linkMale">{$result['room']}</a>
+						{if condition="$result['room'] == null"}
+						{else/}
+						<button type="button" class="btn btn-info btn-xs position" onclick="edit('调整宿舍','{:url('room/reviseRoom',['room'=> $result[\'room\'],'id'=>$result[\'id\'],'gender'=>$result[\'gender\']])}')">调宿</button>
+						{/if}
 					</td>
 				</tr>
 				<tr>
@@ -47,6 +54,10 @@
 					<td class="stutd">{$result['grade']}</td>
 				</tr>
 				<tr>
+					<td>学制</td>
+					<td class="stutd">{$result['len_school']}</td>
+				</tr>
+				<tr>
 					<td>学院</td>
 					<td class="stutd">{$result['college']}</td>
 				</tr>
@@ -57,6 +68,10 @@
 				<tr>
 					<td>民族</td>
 					<td class="stutd">{$result['nation']}</td>
+				</tr>
+				<tr>
+					<td>退宿原因</td>
+					<td class="stutd"></td>
 				</tr>
 			</tbody>
 		</table>

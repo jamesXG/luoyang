@@ -1,15 +1,23 @@
 .table > thead > tr > th {
     text-align: center;
 }
+.row-box{width: 100%;background: #ffffff;margin: 0 auto;text-align: center}
+
+
+
+/*控制字体*/
 .linkFemale{
     text-decoration: underline;
     color: #df706c;
     font-size: 14px;
+    text-align: center;
 }
 .linkMale{
     text-decoration: underline;
     font-size: 14px;
+    text-align: center;
 }
+
 .stutd {
     width: 60%;
     text-align: left;
@@ -139,6 +147,14 @@
     background-color: #393D49;
     color: #F2F2F2;
 }
-/*#more:hover{transform: rotate(90deg);transition: transform 0.5s;}*/
-/*.myModal{width: 80%;height: 300px;background: #ffffff;position: absolute;left: 0;right: 0;top: 30%;bottom: 0;margin: 0 auto;}*/
-/*z-index: 9999;border-radius: 10px;}
+
+/*通知页面的样式*/
+.notice-photo{width: 100%;display: flex;justify-content: center;margin-bottom: 1rem;}
+.notice-photo-img{width: 8rem;height:8rem;background-color: #ffffff;border: 1px solid #CCCCCC;margin:1rem 1rem;}
+.notice-photo-btn{width: 8rem;height:8rem;border: 1px dashed #CCCCCC;margin:1rem 1rem;cursor: pointer}
+.notice-photo-btn img{width: 100%;position: relative;top: 0;bottom: 0;right: 0;left: 0}
+.notice-photo-img img{width: 100%;}
+.ready{width:100%;height:3rem;background-color: #ffffff;border: none;}
+textarea{width: 100%;height:5rem;border: none;border-bottom: 1px solid #CCCCCC}
+.form-submit{width:100%;height:10rem;background: #EEEEEE;margin: 0 auto;display: flex}
+.btn-log{width: 40%;margin: auto}

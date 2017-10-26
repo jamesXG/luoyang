@@ -1,26 +1,72 @@
-function searchproduct() {
-    var keyword = $('#keyword').val();
-    if (keyword == undefined || keyword == null || keyword == "") {
-        layer.open({
-            title: '警告',
-            content: '搜索内容不能为空',
-            shade: [0.3, '#888'],
-            time: 2000,
+$("#keyword").focus(function () {
+    $(".container,.mainheader").fadeOut(300);
+    $("#SearchMain").slideDown(800, 'linear');
+});
 
+$("#content").on('input propertychange', function () {
+    str = $(this).val();
+    $(".searchContainer").hide();
+    url = SCOPE.searchAjax;
+    postData = {'str': str};
+    if(str != '') {
+        $.post(url, postData, function (res) {
+            if (res.status == 1) {
+                data = res;
+                major_html = '';
+                $(data).each(function () {
+                    $(this.data).each(function () {
+                        ID = this.id;
+                        hrefUrl = SCOPE.searchIndex + ID;
+                        major_html += "<a href='" + hrefUrl + "'><li>" + this.name + "</li></a>";
+                    });
+                });
+                $(".predictionCen").html(major_html);
+            } else if (res.status == 0) {
+                $(".predictionCen").html('');
+            }
         });
-        return false;
-    }
-    $('#searchform').submit();
-}
-
-$("#keyword").on("input propertychange", function () {
-    var keyword = $('#keyword').val();
-    if (keyword == undefined || keyword == null || keyword == "") {
-        $("#searchButton").css('display', 'none');
-    } else {
-        $("#searchButton").fadeIn(500).css('display', '');
+    }else{
+        $(".predictionCen").html('');
     }
 });
+
+//搜索页面的输入框失去焦点时
+$("#content").blur(function () {
+    $(".searchContainer").fadeIn();
+});
+
+//点击指定内容显示指定搜索的框
+$(".listP").click(function () {
+    //获取元素的class值
+    name = $(this).attr("class");
+    switch (name){
+        case 'main listP name':
+            $("#searchCss").removeClass('right-search').attr('class', 'top-search-name');
+            $(".predictionCen").css('top','0');
+            $("#content").attr('placeholder', '搜索姓名');
+            break;
+        case 'main listP stu_num':
+            $("#searchCss").removeClass('right-search').attr('class', 'top-search-stu_num');
+            $(".predictionCen").css('top','0');
+            $("#content").attr('placeholder', '搜索学号');
+            break;
+        case 'main listP room':
+            $("#searchCss").removeClass('right-search').attr('class', 'top-search-room');
+            $(".predictionCen").css('top','0');
+            $("#content").attr('placeholder', '搜索房间:安园16#111');
+            break;
+        case 'main listP tel':
+            $("#searchCss").removeClass('right-search').attr('class', 'top-search-tel');
+            $(".predictionCen").css('top','0');
+            $("#content").attr('placeholder', '搜索电话');
+            break;
+        default:
+            layer.msg('error');
+    }
+
+    $(".searchContainer").fadeOut();
+});
+
 
 function layer_laert() {
     layer.msg('功能暂未开放');
@@ -123,7 +169,7 @@ $("#reason").on("input propertychange", function () {
 
 //入住验证输入的学号以及入住刷新
 $(document).ready(function () {
-    $(".checkroom").live('click', function () {
+    $(".checkroom").on('click', function () {
         var str = $(this).parent().parent().children('td').find('input:text').val();
         var id = $(this).parent().parent().children('td').find('input:hidden').val();
         reg = /^[0-9]{9}$/;
@@ -153,3 +199,4 @@ $(document).ready(function () {
         }, 'json');
     });
 });
+

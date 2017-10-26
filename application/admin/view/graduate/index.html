@@ -1,32 +1,32 @@
 {include file="public/header" /}
+
 <div class="container">
 	<div class="row">
 		<div style="width: 100%;background: #ffffff;margin: 0 auto;text-align: center">
-			{if condition="$stuNum == 0"}
-			<div class="alert alert-info" role="alert">暂时还没有相关数据！</div>
-			{else/}
-		<table class="table table-striped">
+		<table class="table">
+			<!--<caption>&nbsp;</caption>-->
 			<thead>
-			<tr style="color: #393D49">
-				<td colspan="3">{$gallery}({$stuNum})</td>
-			</tr>
 			<tr class="column">
 				<th>楼座</th>
-				<th>人数</th>
-				<th>绑定</th>
+				<th>毕业生</th>
 			</tr>
 			</thead>
 			<tbody>
 			{volist name="$data" id="vo"}
+			{if condition="$vo.gender == '女'"}
 			<tr>
-				<td>{$vo.college}</td>
-				<td>{$vo.stuNumber}</td>
-				<td>0</td>
+				<td><a href="{:url('graduate/details',['room'=>$vo.room])}" class="linkFemale">{$vo.room}</a></td>
+				<td>{$vo.total}</td>
 			</tr>
+			{else/}
+			<tr>
+				<td><a href="{:url('graduate/details',['room'=>$vo.room])}" class="linkMale">{$vo.room}</a></td>
+				<td>{$vo.total}</td>
+			</tr>
+			{/if}
 			{/volist}
 			</tbody>
 		</table>
-			{/if}
 		</div>
     </div>
 

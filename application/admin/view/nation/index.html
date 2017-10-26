@@ -1,32 +1,22 @@
 {include file="public/header" /}
+
 <div class="container">
 	<div class="row">
 		<div style="width: 100%;background: #ffffff;margin: 0 auto;text-align: center">
-			{if condition="$stuNum == 0"}
-			<div class="alert alert-info" role="alert">暂时还没有相关数据！</div>
-			{else/}
 		<table class="table table-striped">
 			<thead>
-			<tr style="color: #393D49">
-				<td colspan="3">{$gallery}({$stuNum})</td>
-			</tr>
 			<tr class="column">
-				<th>楼座</th>
+				<th>民族</th>
 				<th>人数</th>
-				<th>绑定</th>
 			</tr>
 			</thead>
 			<tbody>
-			{volist name="$data" id="vo"}
-			<tr>
-				<td>{$vo.college}</td>
-				<td>{$vo.stuNumber}</td>
-				<td>0</td>
+			<tr >
+				<td>汉族</td>
+				<td>6545</td>
 			</tr>
-			{/volist}
 			</tbody>
 		</table>
-			{/if}
 		</div>
     </div>
 

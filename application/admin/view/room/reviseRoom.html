@@ -1,28 +1,34 @@
 {include file="public/header" /}
 <div class="container">
     <div class="row">
-        <form method="post" id="update" name="update" action="{:url('search/save')}">
+        <form method="post" id="update" name="update" action="{:url('room/save')}">
             <div class="form">
                 <div class="form main">
                     <div class="form main input">
                         <div class=" input select">
                             <select class="form-control" name="gallery" id="galleryOption">
-                                <option value="0">--请选择</option>
+                                <option value="">--请选择</option>
                                 {volist name="$data" id="vo"}
-                                <option  value="{$vo}" {if condition="$k eq $vo" } selected="selected" {/if}>--{$vo}</option>
+                                <option value="{$vo}" {if condition="$k eq $vo" } selected="selected"
+
+                                 {/if}>--{$vo}</option>
                                 {/volist}
                             </select>
                         </div>
                     </div>
                     <div class="form main input">
-                        <input type="text" class="form-control" value="{$v}" id="reviseRoom" name="room" placeholder="房间:如100-1">
+                        <input type="text" class="form-control" {if condition="$v neq 0" }value="{$v}" {else/}
+                        value=""{/if} id="reviseRoom" name="room" placeholder="房间:如100-1">
                     </div>
                 </div>
             </div>
             <input type="hidden" name="id" value="{$id}">
             <input type="hidden" name="beRoom" value="{$v}">
+            {if condition="isset($stu_num)"}
+            <input type="hidden" name="stu_num" value="{$stu_num}">
+            {/if}
             <div class="buttons">
-                <button type="submit" onclick="sure_layer()" class="btn btn-success" >确定</button>
+                <button type="submit" class="btn btn-success" style="display: none">确定</button>
             </div>
         </form>
     </div>
@@ -31,7 +37,7 @@
 {load href="__STATIC__/common/common.js" /}
 <script>
     var SCOPE = {
-        'room':'{:url('admin/room/isRoomEmpty')}'
+        'room': '{:url('admin/room/isRoomEmpty')}'
     }
 </script>
 </html>

@@ -2,13 +2,13 @@
 
 <div class="container">
 	<div class="row">
-		<div style="width: 100%;background: #ffffff;margin: 0 auto;text-align: center">
+		<div class="row-box">
 		<table class="table table-striped">
 			<tbody>
 				<tr class="success">
 					<a href="{:url('student/edit',['id' => $result['id']])}"><button type="button" class="btn btn-success btn-xs edit">编辑</button></a>
 					<img src="__STATIC__/images/user.png" style="width: 20%;">
-					<button type="button" onclick="layer_laert()" class="btn btn-danger btn-xs notice">通知</button>
+					<a href="{:url('notice/index')}"><button type="button" class="btn btn-danger btn-xs notice">通知</button></a>
 					{if condition="$result['room'] == null"}
 					<button type="button" onclick="edit('入住','{:url('room/reviseRoom',['room'=> $result[\'room\'],'id'=>$result[\'id\'],'gender'=>$result[\'gender\'],'stu_num'=>$result[\'stu_num\']])}')" class="btn btn-info btn-xs out">入住</button>
 					{else/}

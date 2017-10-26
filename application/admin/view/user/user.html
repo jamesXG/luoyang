@@ -1,8 +1,4 @@
 {include file="public/header" /}
-<body>
-<div class="loading">
-	<span class="pic"></span>
-</div>
 <div class="maincontainer">
 <div class="container" style="max-width:768px;margin:0 auto;">
 	<div class="row">
@@ -12,34 +8,34 @@
 				<img class="img-circle" src="__STATIC__/images/user.png">
         			</div>
 			<div  class="member_m_z member_m_z_1">
-				<div class="member_m_x">测试员</div>
+				<div class="member_m_x">管理员</div>
 				</div>
 		</div>
 		<div class="list-group mb10">
-			<a href="/p/userOrder" class="list-group-item tip">
+			<a href="" class="list-group-item tip">
 				<div class="list_group_img">
 				<img src="__STATIC__/images/member_img16.png"></div>
 				当前状态:<span class="gary off-duty">休息</span>
 			</a>
 		</div>
 		<div class="list-group mb10 member_list_group clearfix">
-			<a href="/p/collect" class="list-group-item col-xs-4">
+			<a  class="list-group-item col-xs-4" onclick="layer_laert()">
 				<div class="m_img"><img src="__STATIC__/images/order_bg_5.png"></div>
 				<p class="m_name">我的通知</p>
 				<span class="red">0</span>
 			</a>
-			<a href="/p/userComments" class="list-group-item col-xs-4">
+			<a  class="list-group-item col-xs-4" onclick="layer_laert()">
 				<div class="m_img"><img src="__STATIC__/images/order_bg_8.png"></div>
-				<p class="m_name">我的维修</p>
+				<p class="m_name">我的报修</p>
 				<span class="red">&nbsp;&nbsp;</span>
 			</a>
-			<a href="/p/inbox" class="list-group-item col-xs-4">
+			<a  class="list-group-item col-xs-4" onclick="layer_laert()">
 				<div class="m_img"><img src="__STATIC__/images/order_bg_9.png"></div>
-				<p class="m_name">收件箱</p>
+				<p class="m_name">意见箱</p>
 				<span class="red">&nbsp;&nbsp;</span>
 			</a>
 
-			<a href="/p/systemMessages" class="list-group-item col-xs-4">
+			<a  class="list-group-item col-xs-4" onclick="layer_laert()">
 				<div class="m_img"><img src="__STATIC__/images/order_bg_7.png"></div>
 				<p class="m_name">系统消息</p>
 				<span class="red">&nbsp;&nbsp;</span>
@@ -48,41 +44,16 @@
 		</div>
 				
 		<div class="list-group mb10">
-			<a href="/p/help" class="list-group-item tip">
+			<a  class="list-group-item tip" onclick="layer_laert()">
 				<div class="list_group_img"><img src="__STATIC__/images/order_bg_10.png"></div>
 				常见问题
 			</a>
-			<a href="/p/feedbacks" class="list-group-item tip">
+			<a  class="list-group-item tip" onclick="layer_laert()">
 				<div class="list_group_img"><img src="__STATIC__/images/order_bg_9.png"></div>
 				意见反馈
 			</a>
 		</div>
 		
-	</div>
-</div>
-<div style="display: none;" class="modal fade" id="myModalmin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-   <div class="modal-dialog">
-      <div class="modal-content">
-      	<form class="form-horizontal" role="form" data-method="formAjax">
-	         <div class="modal-header member_tc_top">
-	            <button type="button" class="close member_tc_xx" data-dismiss="modal" aria-hidden="true">×</button>
-	            <h4 class="modal-title" id="myModalLabel">&nbsp;&nbsp;</h4>
-	         </div>
-			 <div style="overflow:hidden;width: 100%;padding-top: 20px;">
-				<div style="">
-					 <div class="member_mp_t_img" >
-					 	<img src="__STATIC__/images/user.png">
-		        			</div>
-					 <div class="member_mp_t_m">测试员</div>
-					 <div class="member_mp_t_m_m">
-						  	  <img src="__STATIC__/img/a909bfc1-cada-4008-81c0-556ff86aace1.jpg">
-						  </div>
-						  <div class="green member_mp_t_tit">用微信扫二维码加专注</div>
-					  </div>
-			 </div>
-			 <div style="height:60px;"></div>
-         </form>
-      </div>
 	</div>
 </div>
 	<!--包含菜单文件-->

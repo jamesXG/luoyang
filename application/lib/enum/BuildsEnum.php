@@ -17,4 +17,7 @@ class BuildsEnum
 	const MALE = '男';
 	const FEMALE = '女';
 	const GALATE = '-';
+	const GRAMONTH = '07';
+	const TIME = 7000;
+	const DATANUM = 20;
 }

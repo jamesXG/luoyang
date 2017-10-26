@@ -1,0 +1,89 @@
+{include file="public/header" /}
+<div class="container">
+    <div class="row">
+        <div style="width: 100%;background: #ffffff;margin: 0 auto;text-align: center">
+            {if condition="$data == null"}
+            <div class="alert alert-info" role="alert">此楼今年没有毕业生，等来年吧！</div>
+            {else/}
+            <table class="table table-striped">
+                <thead>
+                <tr class="column">
+                    <!--<th>序号</th>-->
+                    <th>房间</th>
+                    <th>姓名</th>
+                    <th>专业</th>
+                </tr>
+                </thead>
+                <tbody>
+                {volist name="$data" id="vo"}
+                <tr>
+                    <!--<td>{$i}</td>-->
+                    <td style="width: 20%"><a href="{:url('search/oneLists',['room'=>$room.'栋'.$vo.room])}" class="linkMale">{$vo.room}</a></td>
+                    {if condition="$vo.gender=='女'"}
+                    <td style="width: 40%"><a href="{:url('Search/stuDetail',['id' => $vo.id])}" class="linkFemale">{$vo.name}</a></td>
+                    {else/}
+                    <td style="width: 40%"><a href="{:url('Search/stuDetail',['id' => $vo.id])}" class="linkMale">{$vo.name}</a></td>
+                    {/if}
+                    <td>{$vo.major}</td>
+                </tr>
+                {/volist}
+                </tbody>
+            </table>
+            {/if}
+            <div class="loadMain"></div>
+            <input type="hidden" name="room" value="{$room}">
+        </div>
+        {if condition="count($data) >= 20"}
+        <div class="load">
+            <a class="load bt" href="javascript:;">下滑显示更多</a>
+        </div>
+        {/if}
+    </div>
+    {include file="public/footer" /}
+</div>
+</body>
+<script>
+    var start = 1;
+    var room = $("input:hidden").val();
+    $(window).scroll(function () {
+        var nowTop = Math.ceil($(document).scrollTop() + $(window).height());
+        _this = $(".bt");
+        url = "{:url('graduate/graduateAjax')}";
+
+        if ($(document).height() <= nowTop) {
+            start++;
+            _this.text("加载中……").fadeIn(1000);
+            $.post(url, {'room': room, 'start': start}, function (res) {
+                if (res.status == 1) {
+                    data = res.data;
+                    info_html = '<table class="table table-striped"><tbody>';
+                    $(data).each(function (i) {
+                        ID = data[i].id;
+                        Room = room + '栋' + data[i].room;
+                        hrefUrlName = "{:url('Search/stuDetail')}?id=" + ID;
+                        hrefRoom = "{:url('search/oneLists')}?room=" + Room;
+                        info_html += '<tr>';
+                        info_html += '<td style="width: 20%"><a href="hrefRoom" class="linkMale">' + data[i].room + '</a></td>';
+                        if (data[i].gender == '女') {
+                            info_html += '<td style="width: 40%"><a href="' + hrefUrlName + '"  class="linkFemale">' + data[i].name + '</a></td>';
+                        } else {
+                            info_html += '<td style="width: 40%"><a href="' + hrefUrlName + '" class="linkMale">' + data[i].name + '</a></td>';
+                        }
+                        info_html += '<td>' + data[i].major + '</td>';
+                        info_html += '</tr>';
+                    });
+                    info_html += '</tbody></table>';
+                    $(".loadMain").before(info_html);
+                    _this.text("下滑显示更多");
+                    $(".load").fadeIn(1000);
+                } else if (res.status == 0) {
+                    _this.text("没有更多信息了");
+                    $(".load").fadeOut(1500);
+                    return false;
+                }
+            });
+        }
+    });
+</script>
+</html>
+

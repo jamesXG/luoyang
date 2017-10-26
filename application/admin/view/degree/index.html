@@ -13,22 +13,16 @@
 			</thead>
 			<tbody>
 			{volist name="$data" id="vo"}
-			{if condition="$vo.gender == '女'"}
 			<tr>
+				{if condition="$vo.gender == '女'"}
 				<td><a href="{:url('degree/details',['gallery' => $vo.room])}" class="linkFemale">{$vo.room}</a></td>
-				<td>{$vo.degreeCount}</td>
-			</tr>
-			{elseif condition="$vo.gender == ''" /}
-			<tr>
+				{elseif condition="$vo.gender == ''" /}
 				<td>{$vo.room}</td>
-				<td>{$vo.degreeCount}</td>
-			</tr>
-			{else/}
-			<tr>
+				{else/}
 				<td><a href="{:url('degree/details',['gallery' => $vo.room])}" class="linkMale">{$vo.room}</a></td>
+				{/if}
 				<td>{$vo.degreeCount}</td>
 			</tr>
-			{/if}
 			{/volist}
 			</tbody>
 		</table>

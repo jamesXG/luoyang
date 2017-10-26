@@ -20,7 +20,6 @@ class Bed extends BaseController
 		$data = $this->obj->getBedInfo();
 
 		$result = $this->getBedInfo();
-//		print_r($data);exit();
 		return $this->fetch('', [
 			'data' => $data,
 			'result' => $result
@@ -43,7 +42,6 @@ class Bed extends BaseController
 	{
 		$data = $this->obj->getCorrBedInfo($room);
 		$data = $this->arrReplace($data);
-//		print_r($data);exit();
 
 
 		return $this->fetch('', [

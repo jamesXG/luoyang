@@ -9,24 +9,84 @@
 namespace app\common\model;
 
 
+use app\lib\enum\BuildsEnum;
+use app\lib\enum\DataBases;
 use think\Db;
 use think\Exception;
 
 class StudentInfo extends BaseModel
 {
-//	总床位数
-	public function getAllBed()
-	{
+	/******************************************************************************************************
+	 * @return 首页相关模块统计
+	 *****************************************************************************************************/
 
-		$result = $this->where('room', 'neq', '')->cache(true, 7200)->count();
-		return $result;
+//	总床位数
+	public static function getAllBed()
+	{
+		$identity = self::userIdentity();
+		$condition = [
+			'room' => ['neq', ''],
+			'room' => ['like', $identity . '%']
+		];
+		return self::where($condition)->cache(true, BuildsEnum::TIME)->count();
 	}
 
+//	楼座数
+	public static function getGalleryNum()
+	{
+		$builds = self::identitySetModel();
+		return count($builds);
+	}
+
+//	入住人数
+	public static function getCheckInStuNum()
+	{
+		$identity = self::userIdentity();
+		$condition = [
+			'room' => ['neq', ''],
+			'stu_num' => ['neq', ''],
+			'name' => ['neq', ''],
+			'room' => ['like', $identity . '%']
+		];
+		return self::where($condition)->cache(true, BuildsEnum::TIME)->count();
+	}
+
+
+//	毕业生数
+	public static function getGraduateStuNum()
+	{
+		$year = judgeGraduate();
+		$identity = self::userIdentity();
+		$condition = [
+			'graduate' => ['eq', $year],
+			'room' => ['like', $identity . '%']
+		];
+		return self::where($condition)->cache(true, BuildsEnum::TIME)->count();
+
+	}
+
+//	今日生日数
+	public static function birthdayNumberToday()
+	{
+		$day = self::getDate();
+		$identity = self::userIdentity();
+		$condition = [
+			'birthday' => ['like', '%' . $day],
+			'room' => ['like', $identity . '%']
+		];
+		return self::where($condition)->cache(true, BuildsEnum::TIME)->count();
+	}
+
+//	民族分类
+	public static function nationSortNumber()
+	{
+		return self::view('nation')->count();
+	}
 
 //	床位模块信息
 	public function getBedInfo()
 	{
-		$builds = builds();
+		$builds = $this->identitySetModel();
 		$len = count($builds);
 //		楼座名+床位数+空床位
 		for ($i = 0; $i < $len; $i++) {
@@ -39,11 +99,8 @@ class StudentInfo extends BaseModel
 		$freeBed = array_convert($freeBed);
 //      合并数组
 		$result = array_group($bed, $freeBed);
-
 //      合并键值对
-		foreach ($builds as $k => $v) {
-			$result[$k]['room'] = $v;
-		}
+		$result = $this->mergeArr($result, $builds, 1);
 
 		return $result;
 	}
@@ -52,11 +109,16 @@ class StudentInfo extends BaseModel
 //	总空床位
 	public function getTotalFreeBed()
 	{
-		$data = [
+		$identity = self::userIdentity();
+		$condition = [
 			'stu_num' => '',
-			'name' => ''
+			'name' => '',
+			'room' => ['neq', ''],
+			'room' => ['like', $identity . '%']
 		];
-		$result = $this->where($data)->where('room', 'neq', '')->cache(true, 7200)->count();
+		$result = $this->where($condition)
+			->cache(true, BuildsEnum::TIME)
+			->count();
 
 		return $result;
 	}
@@ -64,10 +126,15 @@ class StudentInfo extends BaseModel
 //	男生总床位
 	public function getMaleTotalBed()
 	{
-		$data = [
-			'gender' => '男'
+		$identity = self::userIdentity();
+		$condition = [
+			'gender' => '男',
+			'room' => ['neq', ''],
+			'room' => ['like', $identity . '%']
 		];
-		$result = $this->where($data)->where('room', 'neq', '')->cache(true, 7200)->count();
+		$result = $this->where($condition)
+			->cache(true, BuildsEnum::TIME)
+			->count();
 
 		return $result;
 	}
@@ -75,12 +142,17 @@ class StudentInfo extends BaseModel
 //	男生总空床位
 	public function getMaleFreeBed()
 	{
+		$identity = self::userIdentity();
 		$data = [
 			'gender' => '男',
 			'name' => '',
-			'stu_num' => ''
+			'stu_num' => '',
+			'room' => ['neq', ''],
+			'room' => ['like', $identity . '%']
 		];
-		$result = $this->where($data)->where('room', 'neq', '')->cache(true, 7200)->count();
+		$result = $this->where($data)
+			->cache(true, BuildsEnum::TIME)
+			->count();
 
 		return $result;
 
@@ -89,10 +161,15 @@ class StudentInfo extends BaseModel
 //	女生总床位
 	public function getFemaleTotalBed()
 	{
+		$identity = self::userIdentity();
 		$data = [
-			'gender' => '女'
+			'gender' => '女',
+			'room' => ['neq', ''],
+			'room' => ['like', $identity . '%']
 		];
-		$result = $this->where($data)->where('room', 'neq', '')->cache(true, 7200)->count();
+		$result = $this->where($data)
+			->cache(true, BuildsEnum::TIME)
+			->count();
 
 		return $result;
 	}
@@ -100,12 +177,17 @@ class StudentInfo extends BaseModel
 //	男生总空床位
 	public function getFemaleFreeBed()
 	{
+		$identity = self::userIdentity();
 		$data = [
 			'gender' => '女',
 			'name' => '',
-			'stu_num' => ''
+			'stu_num' => '',
+			'room' => ['neq', ''],
+			'room' => ['like', $identity . '%']
 		];
-		$result = $this->where($data)->where('room', 'neq', '')->cache(true, 7200)->count();
+		$result = $this->where($data)
+			->cache(true, BuildsEnum::TIME)
+			->count();
 
 		return $result;
 
@@ -173,7 +255,7 @@ class StudentInfo extends BaseModel
 															WHERE college='$arr[$i]' AND room <> ''");
 		}
 		$data = array_convert($data);
-		//print_r($data);
+
 		return $data;
 	}
 
@@ -215,7 +297,8 @@ class StudentInfo extends BaseModel
 //   楼座与学历之间的统计
 	public function getDegreeAndGallery()
 	{
-		$builds = builds();
+		$builds = $this->identitySetModel();
+
 		$len = count($builds);
 
 		for ($i = 0; $i < $len; $i++) {
@@ -223,11 +306,7 @@ class StudentInfo extends BaseModel
 											WHERE room LIKE '$builds[$i]%' AND degree <> ''");
 		}
 
-		$data = array_convert($data);
-
-		foreach ($builds as $k => $v) {
-			$data[$k]['room'] = $v;
-		}
+		$data = $this->mergeArr($data, $builds);
 		return $data;
 	}
 
@@ -353,6 +432,89 @@ class StudentInfo extends BaseModel
 		$result = Db::query("SELECT room FROM student_info WHERE id = '$id'");
 
 		return array_conversion($result);
+	}
+
+	/********************************************************************************************
+	 * @return 毕业生相关model
+	 * *****************************************************************************************
+	 */
+
+//	获取不同楼座下的毕业生数量
+	public static function getFloorGraduateNum()
+	{
+		$year = judgeGraduate();
+		$floor = self::identitySetModel();
+		$len = count($floor);
+
+		for ($i = 0; $i < $len; $i++) {
+			$data[] = Db::query("SELECT DISTINCT(MID(room,1,length(room)-10)) AS room,COUNT(*) AS total,gender
+ 							FROM student_info  WHERE graduate = '$year' AND room LIKE '$floor[$i]%'");
+		}
+
+		$data = self::mergeArr($data, $floor);
+
+		return $data;
+	}
+
+//	获取指定楼座下的毕业生信息
+	public static function getGraduateStuInfo($room, $start = 0)
+	{
+		$year = judgeGraduate();
+		$result = Db::query("SELECT DISTINCT(MID(room,6,length(room))) AS room,id,name,gender,major 
+				FROM student_info WHERE room LIKE '$room%' AND graduate = '$year'  LIMIT $start,20");
+
+		return $result;
+	}
+
+	/********************************************************************************************
+	 * @return 今日生日相关model
+	 * ******************************************************************************************
+	 */
+
+//	今日生日的学生信息
+	public static function getBirthdayInfo()
+	{
+		$identity = self::userIdentity();
+		$day = self::getDate();
+		$condition = [
+			'birthday' => ['like', '%' . $day],
+			'room' => ['like', $identity . '%']
+		];
+		$display = ['id', 'name', 'room', 'birthday'];
+		$result = self::where($condition)->field($display)->select();
+
+		$result = self::changeArrValue($result, 'room', 0, 8);
+		$result = self::changeArrValue($result, 'birthday', 0, 4);
+
+		return $result;
+	}
+
+//	入住下的入学年级、人数
+	public static function checkInfo()
+	{
+		$identity = self::userIdentity();
+
+		$result = Db::query("SELECT grade,count(name) AS num FROM student_info WHERE room LIKE '$identity%' AND room <> '' AND stu_num <> '' AND grade <> 0 GROUP BY grade");
+		return $result;
+	}
+
+//	每个年级下的楼座、入住人数
+	public static function infoByGrade($grade = '')
+	{
+		$identity = self::userIdentity();
+		$gallery = Db::query("SELECT DISTINCT(MID(room,1,length(room)-9)) AS gallery FROM student_info WHERE grade = '$grade' AND room LIKE '$identity%'");
+		$galleryArr = array_convert($gallery);
+		$len = count($galleryArr);
+		$result = [];
+		for ($i = 0; $i < $len; $i++) {
+			$result[] = Db::query("SELECT count(*) AS num FROM student_info WHERE room LIKE '$galleryArr[$i]%'
+							AND grade = '$grade'");
+		}
+
+		$result = array_convert($result);
+		$result = array_group($gallery,$result);
+
+		return $result;
 	}
 
 }

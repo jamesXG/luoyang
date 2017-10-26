@@ -4,21 +4,22 @@
     <div class="row">
         <div style="width: 100%;background: #ffffff;margin: 0 auto;text-align: center">
             {if condition="$data == null"}
-            <div class="alert alert-info" role="alert">暂时还没有相关信息！</div>
+            <div class="alert alert-info" role="alert">此楼今天没有过生日的乖，明天再看看！</div>
             {else/}
             <table class="table table-striped">
-                <!--<caption>&nbsp;</caption>-->
                 <thead>
                 <tr class="column">
-                    <th>房间</th>
-                    <th>床位数</th>
+                    <th>姓名</th>
+                    <th>宿舍</th>
+                    <td>生日</td>
                 </tr>
                 </thead>
                 <tbody>
-                {volist name="$data" id="vo"}
                 <tr>
+                    {volist name="$data" id="vo"}
+                    <td><a href="{:url('Search/stuDetail',['id' => $vo.id])}" class="linkMale">{$vo.name}</a></td>
                     <td>{$vo.room}</td>
-                    <td>{$vo.bed_num}</td>
+                    <td>{$vo.birthday}</td>
                 </tr>
                 {/volist}
                 </tbody>

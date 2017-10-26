@@ -16,7 +16,6 @@ class Degree extends BaseController
 		$data = model('StudentInfo')->getDegreeAndGallery();
 
 		$info = model('StudentInfo')->getDiffDegreeCount();
-//		print_r($info);exit;
 
 		return $this->fetch('', [
 			'data' => $data,
@@ -28,7 +27,6 @@ class Degree extends BaseController
 	{
 		$data = model('StudentInfo')->getGalleryDegreeDetails($gallery);
 
-//		print_r($data);exit;
 
 		return $this->fetch('',[
 			'data' => $data,

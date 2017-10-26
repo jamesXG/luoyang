@@ -9,21 +9,40 @@
 namespace app\common\model;
 
 
+use app\lib\enum\BuildsEnum;
 use think\Db;
 
 class Degree extends BaseModel
 {
 	public static function getDegreeNum()
 	{
-		$result = self::cache(true,7200)->count();
+		$identity = self::userIdentity();
+		if ($identity == null) {
+			$result = self::cache(true, BuildsEnum::TIME)->count();
+		} else {
+			$condition = [
+				'degree' => ['neq',''],
+				'room' => ['like',$identity.'%']
+			];
+			$result = self::table('student_info')->where($condition)->group('degree')->cache(true, BuildsEnum::TIME)->count();
+		}
 
 		return $result;
 	}
 
 	public function degreeLists()
 	{
-		$result = Db::view('degree','degree')->select();
-//		$result = array_convert($result);
+		$identity = self::userIdentity();
+		if ($identity == null) {
+			$result = Db::view('degree', 'degree')->select();
+		} else {
+			$display = ['degree'];
+			$condition = [
+				'degree' => ['neq', ''],
+				'room' => ['like', $identity . '%']
+			];
+			$result = Db::table('student_info')->where($condition)->group('degree')->field($display)->cache(true, BuildsEnum::TIME)->select();
+		}
 
 		return $result;
 	}

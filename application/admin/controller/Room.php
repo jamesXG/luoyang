@@ -7,8 +7,6 @@ use app\admin\validate\GalleryMustBeRange;
 use app\admin\validate\ListsRoom;
 use app\lib\enum\BuildsEnum;
 use app\lib\exception\PostException;
-use phpDocumentor\Reflection\Types\Null_;
-use think\Request;
 
 class Room extends BaseController
 {
@@ -185,9 +183,8 @@ class Room extends BaseController
 	{
 		$data = $this->getGalleryAttribute($gender);
 		$room = $this->strPlace($room, BuildsEnum::COMPANY, BuildsEnum::DATAUNIT);
-
 		if ($room == null) {
-			$k = $v = 0;
+			$k = 1; $v = 0;
 			return $this->fetch('', [
 				'data' => $data,
 				'k' => $k,
@@ -228,6 +225,7 @@ class Room extends BaseController
 			echo "<script>top.location.reload();</script>";
 		} else {
 			echo '操作失败,请联系客服！';
+			echo "<script>top.location.reload();</script>";
 		}
 	}
 
@@ -292,6 +290,7 @@ class Room extends BaseController
 			echo "<script>top.location.reload();</script>";
 		} else {
 			echo '退宿失败';
+			echo "<script>top.location.reload();</script>";
 		}
 	}
 

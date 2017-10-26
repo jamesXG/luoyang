@@ -60,7 +60,7 @@
         </div>
         {if condition = "$length >= 8"}
         <div class="load">
-            <a class="load bt" href="javascript:;">点击显示更多</a>
+            <a class="load bt" href="javascript:;">下滑显示更多</a>
         </div>
         {/if}
     </div>
@@ -72,17 +72,17 @@
         'room':'{:url('admin/room/getIntoRoom')}'
     }
 
-    $(".container").fadeIn("slow");
+    $(".container").fadeIn(1000);
     var nStart = 1;
     var roomInfo = $("#gallery").val();
     $(window).scroll(function(){
         //获取当前页面底部距离顶部的高度距离
         var nowTop = Math.ceil($(document).scrollTop()+$(window).height());
-        _this = $(this);
+        _this = $('.bt');
         url = "{:url('Room/contentAjax')}";
         if($(document).height()<=nowTop) {
-            _this.text("加载中……");
             nStart++;
+            _this.text("加载中……").fadeIn(1000);
             $.post(url, {start: nStart, room: roomInfo}, function (res) {
                 if (res.status == 1) {
                     data = res.data;
@@ -94,7 +94,6 @@
                                 "<tr><td colspan='3' style='background: #d6d5c2;color:#ffffff;border-top: hidden;border-left: hidden;border-right: hidden'>" + this.info[i]['room'] + "--" + this.info[i]['college'] +
                                 "</td></tr>";
                         }
-
                         info_html += "</thead><tbody style='text-align: center'>";
                         for (var j = 0, len = this.lists.length; j < len; j++) {
                             ID = this.lists[j]['id'];
@@ -122,7 +121,7 @@
                         info_html += "</tbody></table>";
                     });
                     $(".loadMain").before(info_html);
-                    _this.text("点击显示更多");
+                    _this.text("下滑显示更多").fadeIn(1000);
                 } else if (res.status == 0) {
                     _this.text("没有更多信息了");
                     $(".load").fadeOut(1500);

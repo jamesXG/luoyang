@@ -1,19 +1,37 @@
 {include file="public/header" /}
-<header class="header">
+<header class="mainheader">
     <div class="fix_nav">
         <div style="max-width:768px;margin:0 auto;height: 44px;position: relative;">
-            <form action="{:url('search/index')}" method="post" id="searchform" name="searchform">
                 <div class="navbar-search left-search">
-                    <input type="text" id="keyword" name="data" value="" placeholder="姓名、学号、房间" class="form-control">
+                    <input type="text" id="keyword" name="data" value="" placeholder="姓名、学号、房间、电话" class="form-control">
                 </div>
-                <div class="nav-right">
-                    <input type="button" value="搜索" id="searchButton" onclick="searchproduct();" class="img-responsive"
-                           style="display:none;color: #ffffff;line-height: 34px; background:rgba(9, 187, 7,.8);border:none;height:34px;vertical-align:middle;clear:both;padding:0px;"/>
-                </div>  <!--#09bb07-->
-            </form>
         </div>
     </div>
 </header>
+<!--搜索部分-->
+<div id="SearchMain">
+        <div class="fix_nav">
+            <div style="max-width:768px;margin:0 auto;height: 44px;position: relative;">
+                <form action="{:url('search/index')}" method="post" id="searchform" name="searchform">
+                    <div id="searchCss" class="navbar-search right-search">
+                        <input type="text" id="content" maxlength="11" name="data" value="" placeholder="搜索" class="form-control" autofocus>
+                    </div>
+                </form>
+                <ul class="predictionCen"></ul>
+            </div>
+        </div>
+    <div class="searchContainer">
+        <div class="rows">
+            <p class="rows fromP">搜索指定内容</p>
+            <div class="rows main">
+                <div class="main listP name">姓名</div>
+                <div class="main listP stu_num">学号</div>
+                <div class="main listP room">房间</div>
+                <div class="main listP tel">电话</div>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="container">
     <div class="row">
         <div id="slide">
@@ -59,36 +77,34 @@
         });
     </script>
     <div class="row category">
-        <a href="{:url('room/index')}" class="col-xs-3">
-            <img class="img-responsive" src="__STATIC__/img/icon_rm.png">
-            <h4 class="pitch_index">房间</h4>
-            <span class="green">{$data['room']}</span>
+        {volist name="$data" id="vo"}
+        <a href="{$vo.url}" class="col-xs-3">
+            <img class="img-responsive" src="{$vo.img_url}">
+            <h4 class="pitch_index">{$vo.name}</h4>
+            <span class="green">{$vo.num}</span>
         </a>
-        <a href="{:url('bed/index')}" class="col-xs-3">
-            <img class="img-responsive" src="__STATIC__/img/icon_tm.png">
-            <h4 class="pitch_index">床位</h4>
-            <span class="green">{$data['bed']}</span>
+        {/volist}
+    </div>
+    <div class="row category">
+        <a  class="col-xs-3" onclick="layer_laert();">
+            <img class="img-responsive" src="__STATIC__/img/icon_tel.png">
+            <h4 class="pitch_index">公寓电话</h4>
         </a>
-        <a href="{:url('college/index')}" class="col-xs-3">
-            <img class="img-responsive" src="__STATIC__/img/theme.png">
-            <h4 class="pitch_index">学院</h4>
-            <span class="green">{$data['college']}</span>
+        <a  class="col-xs-3" onclick="layer_laert();">
+            <img class="img-responsive" src="__STATIC__/img/notice.png">
+            <h4 class="pitch_index">通知公告</h4>
         </a>
-        <!--<a href="{:url('gallery/index')}" class="col-xs-3">-->
-        <!--<img class="img-responsive" src="__STATIC__/img/icon_pp.png">-->
-        <!--<h4 class="pitch_index">楼座</h4>-->
-        <!--<span class="green">{$data['gallery']}</span>-->
-        <!--</a>-->
-        <a href="{:url('degree/index')}" class="col-xs-3">
-            <img class="img-responsive" src="__STATIC__/img/icon_degree.png">
-            <h4 class="pitch_index">学历</h4>
-            <span class="green">{$data['degree']}</span>
+        <a  class="col-xs-3" onclick="layer_laert();">
+            <img class="img-responsive" src="__STATIC__/img/icon_calender.png">
+            <h4 class="pitch_index">校历</h4>
         </a>
-
+        <a  class="col-xs-3" onclick="layer_laert();">
+            <img class="img-responsive" src="__STATIC__/img/icon_lost.png">
+            <h4 class="pitch_index">失物招领</h4>
+        </a>
     </div>
 
 </div>
-<!--包含菜单文件-->
 {include file="public/footer" /}
 
 <script type="text/javascript">
@@ -99,7 +115,10 @@
         });
     });
 
+    SCOPE = {
+        'searchAjax':'{:url('admin/index/contentAjaxSearch')}',
+        'searchIndex':'{:url('admin/Search/stuDetail')}?id='
+    }
 </script>
 </body>
 </html>
-

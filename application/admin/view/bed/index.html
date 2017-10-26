@@ -29,19 +29,15 @@
 				<td>{$result['totalFreeMaleBed']}</td>
 			</tr>
 			{volist name="$data" id="vo"}
-			{if condition="$vo.sex == '女'"}
 			<tr style="color: #df706c">
+				{if condition="$vo.sex == '女'"}
 				<td><a href="{:url('bed/details',['room'=> $vo.room])}" class="linkFemale">{$vo.room}</a></td>
-				<td>{$vo.rooms}</td>
-				<td>{$vo.freerooms}</td>
-			</tr>
-			{else/}
-			<tr>
+				{else/}
 				<td><a href="{:url('bed/details',['room'=> $vo.room])}" class="linkMale">{$vo.room}</a></td>
+				{/if}
 				<td>{$vo.rooms}</td>
 				<td>{$vo.freerooms}</td>
 			</tr>
-			{/if}
 			{/volist}
 			</tbody>
 		</table>

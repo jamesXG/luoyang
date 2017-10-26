@@ -8,13 +8,18 @@
 
 namespace app\common\model;
 
+use app\lib\enum\BuildsEnum;
 use think\Db;
 
 class RoomInfo extends BaseModel
 {
 	public function getAllRoom()
 	{
-		$result = $this->cache(true, 7200)->count();
+		$identity = self::userIdentity();
+		$condition = [
+			'room' => ['like',$identity.'%']
+		];
+		$result = $this->where($condition)->cache(true, BuildsEnum::TIME)->count();
 
 		return $result;
 	}
@@ -22,7 +27,7 @@ class RoomInfo extends BaseModel
 	//  房间模块信息
 	public function getRoomInfo()
 	{
-		$builds = builds();
+		$builds = $this->identitySetModel();
 		$len = count($builds);
 //      查询楼座名+对应楼座的房间数+空房间+不可用房间数
 		for ($i = 0; $i < $len; $i++) {
@@ -42,9 +47,7 @@ class RoomInfo extends BaseModel
 		$result = array_group($room, $emptyRoom);
 		$result = array_group($result, $unUseRoom);
 //      合并键值对
-		foreach ($builds as $k => $v) {
-			$result[$k]['room'] = $v;
-		}
+		$result = $this->mergeArr($result,$builds,1);
 
 		return $result;
 	}
@@ -52,7 +55,8 @@ class RoomInfo extends BaseModel
 //  总空房间数
 	public function getTotalFreeRoom()
 	{
-		$result = Db::query("SELECT COUNT(room) AS room FROM `room_info` WHERE bed_num = empty_bed_num");
+		$identity = self::userIdentity();
+		$result = Db::query("SELECT COUNT(room) AS room FROM `room_info` WHERE bed_num = empty_bed_num AND room LIKE '$identity%'");
 
 		return $result;
 	}
@@ -60,39 +64,44 @@ class RoomInfo extends BaseModel
 //	女生总房间数
 	public function getFemaleRoom()
 	{
+		$identity = self::userIdentity();
 		$result = Db::query("SELECT COUNT(room) AS room FROM `room_info` 
-												WHERE gender = '女' ");
+												WHERE gender = '女' AND room LIKE '$identity%' ");
 		return $result;
 	}
 
 //	男生总房间数
 	public function getMaleRoom()
 	{
+		$identity = self::userIdentity();
 		$result = Db::query("SELECT COUNT(room) AS room FROM `room_info` 
-												WHERE gender = '男' ");
+												WHERE gender = '男' AND room LIKE '$identity%' ");
 		return $result;
 	}
 
 //	女生总空房间数
 	public function getFemaleFreeRoom()
 	{
+		$identity = self::userIdentity();
 		$result = Db::query("SELECT COUNT(room) AS room FROM `room_info` 
-												WHERE gender = '女' AND bed_num = empty_bed_num");
+												WHERE gender = '女' AND bed_num = empty_bed_num AND room LIKE '$identity%' ");
 		return $result;
 	}
 
 //	男生总空房间数
 	public function getMaleFreeRoom()
 	{
+		$identity = self::userIdentity();
 		$result = Db::query("SELECT COUNT(room) AS room FROM `room_info` 
-												WHERE gender = '男' AND bed_num = empty_bed_num");
+												WHERE gender = '男' AND bed_num = empty_bed_num AND room LIKE '$identity%' ");
 		return $result;
 	}
 
 //	总不可用房间
 	public function getUnmadeRoom()
 	{
-		$result = Db::query("SELECT COUNT(*) AS room FROM `room_info` WHERE status = 0");
+		$identity = self::userIdentity();
+		$result = Db::query("SELECT COUNT(*) AS room FROM `room_info` WHERE status = 0 AND room LIKE '$identity%'");
 
 		return $result;
 	}
@@ -100,7 +109,8 @@ class RoomInfo extends BaseModel
 //	男生不可用房间数
 	public function getMaleUnMadeRoom()
 	{
-		$result = Db::query("SELECT COUNT(*) AS room FROM `room_info` WHERE gender = '男' AND status = 0");
+		$identity = self::userIdentity();
+		$result = Db::query("SELECT COUNT(*) AS room FROM `room_info` WHERE gender = '男' AND status = 0 AND room LIKE '$identity%'");
 
 		return $result;
 	}
@@ -108,7 +118,8 @@ class RoomInfo extends BaseModel
 //	女生不可用房间数
 	public function getFemaleUnMadeRoom()
 	{
-		$result = Db::query("SELECT COUNT(*) AS room FROM `room_info` WHERE gender = '女' AND status = 0");
+		$identity = self::userIdentity();
+		$result = Db::query("SELECT COUNT(*) AS room FROM `room_info` WHERE gender = '女' AND status = 0 AND room LIKE '$identity%'");
 
 		return $result;
 	}
